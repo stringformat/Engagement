@@ -1,14 +1,14 @@
-using Engagement.Api.Campaign.Create;
-using Engagement.Api.Campaign.List;
-using Engagement.Api.Campaign.Retrieve;
-using Engagement.Api.Campaign.Update;
-using Engagement.Api.Survey.Close;
-using Engagement.Api.Survey.Create;
-using Engagement.Api.Survey.List;
-using Engagement.Api.Survey.Open;
-using Engagement.Api.Survey.Reschedule;
-using Engagement.Api.Survey.Retrieve;
-using Engagement.Api.Survey.Update;
+using Engagement.Api.Campaigns.Create;
+using Engagement.Api.Campaigns.List;
+using Engagement.Api.Campaigns.Retrieve;
+using Engagement.Api.Campaigns.Update;
+using Engagement.Api.Surveys.Close;
+using Engagement.Api.Surveys.Create;
+using Engagement.Api.Surveys.List;
+using Engagement.Api.Surveys.Open;
+using Engagement.Api.Surveys.Reschedule;
+using Engagement.Api.Surveys.Retrieve;
+using Engagement.Api.Surveys.Update;
 using Engagement.Application;
 using Microsoft.AspNetCore.HttpLogging;
 

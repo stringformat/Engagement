@@ -1,27 +1,20 @@
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using Engagement.Common.ResultPattern;
-using Engagement.Domain.Common;
-using Engagement.Domain.SurveyAggregate;
-using Engagement.Domain.UserAggregate;
-
 namespace Engagement.Domain.CampaignAggregate;
 
 public class Campaign : Entity, IAggregateRoot
 {
-    public string Name { get; private set; }
-    public string Description { get; private set; }
+    public Name Name { get; private set; }
+    public Description Description { get; private set; }
 
     private readonly Collection<Survey> _surveys = [];
     public virtual ImmutableList<Survey> Surveys => _surveys.ToImmutableList();
     
-    private readonly Collection<User> _populations;
-    public virtual ImmutableList<User> Populations => _populations.ToImmutableList();
+    private readonly HashSet<User> _populations;
+    public virtual ImmutableHashSet<User> Populations => _populations.ToImmutableHashSet();
 
-    public Campaign(string name, string description, Collection<User> populations)
+    public Campaign(Name name, Description description, HashSet<User> populations)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        ArgumentException.ThrowIfNullOrWhiteSpace(description);
+        ArgumentNullException.ThrowIfNull(name);
+        ArgumentNullException.ThrowIfNull(description);
         ArgumentNullException.ThrowIfNull(populations);
         
         if(populations.Count == 0)
@@ -32,7 +25,7 @@ public class Campaign : Entity, IAggregateRoot
         _populations = populations;
     }
 
-    public Result Update(string? name, string? description)
+    public Result Update(Name? name, Description? description)
     {
         if (name is null && description is null)
             return Result.Failure();

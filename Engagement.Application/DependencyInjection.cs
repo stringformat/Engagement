@@ -1,5 +1,5 @@
 using Engagement.Application.Behaviors;
-using Engagement.Application.Features.Campaign.Create;
+using Engagement.Application.Features.Campaigns.Create;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Engagement.Application;

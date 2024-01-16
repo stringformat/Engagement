@@ -47,6 +47,8 @@ public record Result<TResult> : Result
 
     public new static Result<TResult> Failure() => new(default(Error)!);
 
+    public static Result<TResult> Success(TResult result) => new(result); 
+
     public static implicit operator Result<TResult>(TResult value) => new(value);
     
     public static implicit operator TResult(Result<TResult> value) => value.Value;

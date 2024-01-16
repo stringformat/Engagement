@@ -19,9 +19,4 @@
       <ProjectReference Include="..\Engagement.Domain\Engagement.Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Answer\" />
-      <Folder Include="User\" />
-    </ItemGroup>
-
 </Project>

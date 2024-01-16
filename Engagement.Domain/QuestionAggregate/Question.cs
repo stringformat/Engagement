@@ -1,47 +1,39 @@
-using System.Collections.Immutable;
-using System.Collections.ObjectModel;
-using Engagement.Common.ResultPattern;
-using Engagement.Domain.Common;
-
 namespace Engagement.Domain.QuestionAggregate;
 
 public class Question : Entity, IAggregateRoot
 {
-    public string Name { get; private set; }
-    public string Description { get; private set; }
-    public uint Order { get; private set; }
+    public Name Name { get; private set; }
+    public Description Description { get; private set; }
+    public Order Order { get; private set; }
     
     private readonly Collection<Answer> _answers = [];
     public virtual ImmutableList<Answer> Answers => _answers.ToImmutableList();
     
-    public Question(string name, string description, uint order)
+    public Question(Name name, Description description, Order order)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(name);
-        ArgumentException.ThrowIfNullOrWhiteSpace(description);
-        
         Name = name;
         Description = description;
         Order = order;
     }
     
-    public Result Update(string? name, string? description)
+    public Result Update(Name name, Description description)
     {
         if(HasAnswers())
             return Result.Failure();
         
-        if (name is null && description is null) 
+        if (name is Name.EmptyName && description is Description.EmptyDescription) 
             return Result.Failure();
         
-        if(name is not null)
+        if(name is not Name.EmptyName)
             Name = name;
         
-        if(description is not null)
+        if(description is not Description.EmptyDescription)
             Description = description;
         
         return Result.Success();
     } 
 
-    public void Reorder(uint order)
+    public void Reorder(Order order)
     {
         Order = order;
     }
