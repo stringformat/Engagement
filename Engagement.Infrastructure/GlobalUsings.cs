@@ -10,5 +10,6 @@ global using Engagement.Application.Features.Surveys.Retrieve;
 global using Engagement.Common.ResultPattern;
 global using Engagement.Domain.Common;
 global using Engagement.Domain.SurveyAggregate;
+global using Engagement.Domain.UserAggregate;
 global using Engagement.Infrastructure.Common;
 global using Microsoft.EntityFrameworkCore;

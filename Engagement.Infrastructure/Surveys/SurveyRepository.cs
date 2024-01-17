@@ -1,3 +1,3 @@
 namespace Engagement.Infrastructure.Surveys;
 
-public class SurveyRepository(DbContext context) : RepositoryBase<Survey>(context), ISurveyRepository;
+public class SurveyRepository(EngagementContext context) : RepositoryBase<Survey>(context), ISurveyRepository;

@@ -19,4 +19,6 @@ public record Commentary
     public static EmptyCommentary Empty => new();
 
     public record EmptyCommentary() : Commentary(string.Empty);
+    
+    public static implicit operator string(Commentary commentary) => commentary.Value;
 }

@@ -7,22 +7,18 @@ public class Campaign : Entity, IAggregateRoot
 
     private readonly Collection<Survey> _surveys = [];
     public virtual ImmutableList<Survey> Surveys => _surveys.ToImmutableList();
-    
-    private readonly HashSet<User> _populations;
-    public virtual ImmutableHashSet<User> Populations => _populations.ToImmutableHashSet();
 
-    public Campaign(Name name, Description description, HashSet<User> populations)
+    public Campaign(Name name, Description description)
     {
         ArgumentNullException.ThrowIfNull(name);
         ArgumentNullException.ThrowIfNull(description);
-        ArgumentNullException.ThrowIfNull(populations);
-        
-        if(populations.Count == 0)
-            throw new ArgumentNullException(nameof(populations));
         
         Name = name;
         Description = description;
-        _populations = populations;
+    }
+    
+    private Campaign()
+    {
     }
 
     public Result Update(Name? name, Description? description)
@@ -44,12 +40,5 @@ public class Campaign : Entity, IAggregateRoot
         ArgumentNullException.ThrowIfNull(survey);
 
         _surveys.Add(survey);
-    }
-
-    public void AddPerson(User person)
-    {
-        ArgumentNullException.ThrowIfNull(person);
-        
-        _populations.Add(person);
     }
 }

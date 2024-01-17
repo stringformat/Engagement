@@ -1,6 +1,6 @@
 namespace Engagement.Infrastructure.Common;
 
-public abstract class RepositoryBase<T>(DbContext dbContext) : IRepository<T>
+public abstract class RepositoryBase<T>(DbContext dbContext)
     where T : Entity, IAggregateRoot
 {
     public async Task AddAsync(T entity, CancellationToken cancellationToken)

@@ -1,6 +1,6 @@
 namespace Engagement.Infrastructure.Surveys;
 
-public class SurveyReadRepository(DbContext context) : ReadRepositoryBase<Survey>(context), ISurveyReadRepository
+public class SurveyReadRepository(EngagementContext context) : ReadRepositoryBase<Survey>(context), ISurveyReadRepository
 {
     public Task<List<ListSurveyResponse>> ListAsync(CancellationToken cancellationToken)
     {

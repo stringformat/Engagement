@@ -1,4 +1,3 @@
-using Engagement.Application.Features.Users;
 using Engagement.Domain.CampaignAggregate;
 using Engagement.Domain.Common;
 using MediatR;
@@ -8,20 +7,16 @@ namespace Engagement.Application.Features.Campaigns.Create;
 public record CreateCampaignCommandHandler : IRequestHandler<CreateCampaignCommand, Result<Guid>>
 {
     private readonly ICampaignRepository _campaignRepository;
-    private readonly IUserRepository _userRepository;
 
-    public CreateCampaignCommandHandler(ICampaignRepository campaignRepository, IUserRepository userRepository)
+    public CreateCampaignCommandHandler(ICampaignRepository campaignRepository)
     {
         _campaignRepository = campaignRepository;
-        _userRepository = userRepository;
     }
     
     public async Task<Result<Guid>> Handle(
         CreateCampaignCommand request,
         CancellationToken cancellationToken)
     {
-        var populations = await _userRepository.FindAsync(request.Populations, cancellationToken);
-        
         var (isCreatedName, name, nameError) = Name.Create(request.Name);
 
         if (!isCreatedName)
@@ -32,7 +27,7 @@ public record CreateCampaignCommandHandler : IRequestHandler<CreateCampaignComma
         if (!isCreatedDescription)
             return descriptionError;
         
-        var campaign = new Campaign(name, description, populations.ToHashSet());
+        var campaign = new Campaign(name, description);
 
         await _campaignRepository.AddAsync(campaign, cancellationToken);
 

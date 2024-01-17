@@ -16,7 +16,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Engagement.Application\Engagement.Application.csproj" />
-      <ProjectReference Include="..\Engagement.Domain\Engagement.Domain.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,6 @@
 using Engagement.Application.Features.Surveys;
 using Engagement.Domain.Common;
 using Engagement.Domain.QuestionAggregate;
-using Engagement.Domain.SurveyAggregate;
 using MediatR;
 
 namespace Engagement.Application.Features.Questions.Create;

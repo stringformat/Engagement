@@ -1,14 +1,14 @@
-using Engagement.Application.Features.Campaigns.List;
+using Engagement.Application.Features.Questions.List;
 
 namespace Engagement.Api.Questions.List;
 
 public static class Endpoint
 {
-    public static WebApplication MapCampaignList(this WebApplication app)
+    public static WebApplication MapQuestionList(this WebApplication app)
     {
-        app.MapGet("api/campaigns", async (IMediator mediator) =>
+        app.MapGet("api/questions", async (IMediator mediator) =>
         {
-            var responses = await mediator.Send(new ListCampaignQuery());
+            var responses = await mediator.Send(new ListQuestionQuery());
 
             return responses.Select(Response.FromQuery);
         });

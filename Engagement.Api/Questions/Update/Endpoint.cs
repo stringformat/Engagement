@@ -1,17 +1,17 @@
-using Engagement.Application.Features.Campaigns.Update;
+using Engagement.Application.Features.Questions.Update;
 
 namespace Engagement.Api.Questions.Update;
 
 public static class Endpoint
 {
-    public static WebApplication MapCampaignUpdate(this WebApplication app)
+    public static WebApplication MapQuestionUpdate(this WebApplication app)
     {
-        app.MapPut("api/campaigns/{id:guid}", async (Guid id, Request request, IMediator mediator) =>
+        app.MapPut("api/questions/{id:guid}", async (Guid id, Request request, IMediator mediator) =>
         {
-            var result = await mediator.Send(new UpdateCampaignCommand(id, request.Name, request.Description));
+            var result = await mediator.Send(new UpdateQuestionCommand(id, request.Name, request.Description));
             
             return result.IsSuccess 
-                ? Results.Ok((object?)Response.FromCommand(result)) 
+                ? Results.Ok(Response.FromCommand(result)) 
                 : Results.BadRequest();
         });
 

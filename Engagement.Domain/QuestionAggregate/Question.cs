@@ -15,7 +15,11 @@ public class Question : Entity, IAggregateRoot
         Description = description;
         Order = order;
     }
-    
+
+    private Question()
+    {
+    }
+
     public Result Update(Name name, Description description)
     {
         if(HasAnswers())

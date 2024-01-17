@@ -1,3 +1,3 @@
 namespace Engagement.Infrastructure.Campaigns;
 
-public class CampaignRepository(DbContext context) : RepositoryBase<Domain.CampaignAggregate.Campaign>(context), ICampaignRepository;
+public class CampaignRepository(EngagementContext context) : RepositoryBase<Domain.CampaignAggregate.Campaign>(context), ICampaignRepository;

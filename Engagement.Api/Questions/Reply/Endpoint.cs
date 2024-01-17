@@ -4,7 +4,7 @@ namespace Engagement.Api.Questions.Reply;
 
 public static class Endpoint
 {
-    public static WebApplication MapQuestionCreate(this WebApplication app)
+    public static WebApplication MapQuestionReply(this WebApplication app)
     {
         app.MapPost("api/questions/{id:guid}/reply", async (Guid id, Request request, IMediator mediator) =>
         {

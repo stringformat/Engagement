@@ -21,7 +21,11 @@ public class Survey : Entity, IAggregateRoot
         Description = description;
         SendingDate = sendingDate;
     }
-    
+
+    private Survey()
+    {
+    }
+
     public Result Update(Name name, Description description)
     {
         if(Status is not Status.Draft)

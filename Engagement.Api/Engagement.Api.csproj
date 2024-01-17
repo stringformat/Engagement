@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Engagement.Application\Engagement.Application.csproj" />
+      <ProjectReference Include="..\Engagement.Infrastructure\Engagement.Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>

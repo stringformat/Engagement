@@ -13,22 +13,16 @@ public class CampaignConfiguration : IEntityTypeConfiguration<Campaign>
         
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x).Value);
-        
+            .HasConversion(x => x.Value, x => Name.Create(x));
+
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x).Value);
+            .HasConversion(x => x.Value, x => Description.Create(x));
 
         builder
             .HasMany(x => x.Surveys)
-            .WithOne()
-            .HasForeignKey(x => x.Id);
+            .WithOne();
         
-        builder
-            .HasMany(x => x.Populations)
-            .WithOne()
-            .HasForeignKey(x => x.Id);
-        
-        builder.Metadata.FindNavigation(nameof(Campaign))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Campaign.Surveys))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

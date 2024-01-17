@@ -13,21 +13,29 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x).Value);
+            .HasConversion(x => x.Value, x => Name.Create(x));
         
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x).Value);
+            .HasConversion(x => x.Value, x => Description.Create(x));
         
         builder
             .Property(x => x.Order)
-            .HasConversion(x => x.Value, x => new(x));
+            .HasConversion(x => x.Value, x => new Order(x));
 
         builder.OwnsMany(x => x.Answers, navigationBuilder =>
         {
-            navigationBuilder.Property(x => x.Commentary).HasConversion(x => x.Value, x => Commentary.Create(x).Value);
+            navigationBuilder.HasKey(x => x.Id);
+            
+            navigationBuilder
+                .Property(x => x.Commentary)
+                .HasConversion(x => x.Value, x => Commentary.Create(x));
+
+            navigationBuilder
+                .HasOne(x => x.Person)
+                .WithMany();
         });
 
-        builder.Metadata.FindNavigation(nameof(Question))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Question.Answers))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

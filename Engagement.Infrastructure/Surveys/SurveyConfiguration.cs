@@ -12,21 +12,21 @@ public class SurveyConfiguration : IEntityTypeConfiguration<Survey>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x).Value);
+            .HasConversion(x => x.Value, x => Name.Create(x));
         
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x).Value);
+            .HasConversion(x => x.Value, x => Description.Create(x))
+            .HasMaxLength(Description.MAX_LENTH);
         
         builder
             .Property(x => x.SendingDate)
-            .HasConversion(x => x.Value, x => SendingDate.Create(x).Value);
+            .HasConversion(x => x.Value, x => SendingDate.Create(x));
 
         builder
             .HasMany(x => x.Questions)
-            .WithOne()
-            .HasForeignKey(x => x.Id);
+            .WithOne();
 
-        builder.Metadata.FindNavigation(nameof(Survey))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Metadata.FindNavigation(nameof(Survey.Questions))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

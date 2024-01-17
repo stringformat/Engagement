@@ -2,4 +2,4 @@
 
 namespace Engagement.Application.Features.Questions.Retrieve;
 
-public record RetrieveQuestionQuery(Guid Id, Guid SurveyId) : IRequest<Result<RetrieveQuestionResponse>>;
+public record RetrieveQuestionQuery(Guid Id) : IRequest<Result<RetrieveQuestionResponse>>;

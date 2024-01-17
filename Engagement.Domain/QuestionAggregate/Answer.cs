@@ -19,5 +19,9 @@ public class Answer : Entity
         Person = person;
     }
 
+    private Answer()
+    {
+    }
+
     public bool HasCommentary() => Commentary is not Commentary.EmptyCommentary;
 }

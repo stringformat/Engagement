@@ -12,4 +12,8 @@ public class User : Entity, IAggregateRoot
         LastName = lastName;
         Email = email;
     }
+
+    private User()
+    {
+    }
 }
