@@ -2,20 +2,22 @@ namespace Engagement.Common;
 
 public enum ErrorType
 {
-    Undefined = 0,
+    Undefined,
     
-    NameTooLong = 1,
-    DescriptionTooLong = 2,
+    NameTooLong,
+    DescriptionTooLong,
     
-    DataRequiredWhenUpdateCampaign = 3,
+    DataRequiredWhenUpdateCampaign,
     
-    CommentaryTooLong = 4,
-    DataRequiredWhenUpdateQuestion = 5,
-    ImpossibleToUpdateQuestionWithAnswers = 6,
+    CommentaryTooLong,
+    DataRequiredWhenUpdateQuestion,
+    ImpossibleToUpdateQuestionWithAnswers,
+    RangeQuestionInvalidValueError,
+    MultipleChoiceOptionInvalidCount,
     
-    SendingDateIsInPast = 7,
+    SendingDateIsInPast,
     
-    EmailInvalid = 8,
-    FirstNameTooLong = 9,
-    LastNameTooLong = 10
+    EmailInvalid,
+    FirstNameTooLong,
+    LastNameTooLong
 }

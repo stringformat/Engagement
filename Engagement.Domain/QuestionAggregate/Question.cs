@@ -1,15 +1,18 @@
+using Engagement.Domain.QuestionAggregate.Answers;
+using Engagement.Domain.QuestionAggregate.ValueObjects;
+
 namespace Engagement.Domain.QuestionAggregate;
 
-public class Question : Entity, IAggregateRoot
+public abstract class Question : Entity, IAggregateRoot 
 {
     public Name Name { get; private set; }
     public Description Description { get; private set; }
     public Order Order { get; private set; }
     
     private readonly Collection<Answer> _answers = [];
-    public virtual ImmutableList<Answer> Answers => _answers.ToImmutableList();
-    
-    public Question(Name name, Description description, Order order)
+    public virtual IEnumerable<Answer> Answers => _answers.ToImmutableList();
+
+    protected Question(Name name, Description description, Order order)
     {
         Name = name;
         Description = description;

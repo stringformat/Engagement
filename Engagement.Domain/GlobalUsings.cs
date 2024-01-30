@@ -8,4 +8,4 @@ global using Engagement.Domain.SurveyAggregate;
 global using Engagement.Domain.UserAggregate;
 global using EmptyName = Engagement.Domain.Common.Name.EmptyName;
 global using EmptyDescription = Engagement.Domain.Common.Description.EmptyDescription;
-global using EmptyCommentary = Engagement.Domain.QuestionAggregate.Commentary.EmptyCommentary;
+global using EmptyCommentary = Engagement.Domain.QuestionAggregate.ValueObjects.Commentary.EmptyCommentary;

@@ -1,4 +1,5 @@
 ﻿using Engagement.Domain.QuestionAggregate;
+using Engagement.Domain.QuestionAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Engagement.Infrastructure.Questions;

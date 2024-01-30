@@ -1,4 +1,4 @@
-namespace Engagement.Domain.QuestionAggregate;
+namespace Engagement.Domain.QuestionAggregate.ValueObjects;
 
 public record Commentary
 {

@@ -1,24 +1,22 @@
-using System.Collections.ObjectModel;
 using Engagement.Application.Features.Surveys;
 using Engagement.Domain.Common;
-using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 using MediatR;
 
 namespace Engagement.Application.Features.Questions.Create;
 
-public record CreateMutipleChoiceQuestionCommandHandler : IRequestHandler<CreateMultipleChoiceQuestionCommand, Result<Guid>>
+public record CreateTextQuestionCommandHandler : IRequestHandler<CreateTextQuestionCommand, Result<Guid>>
 {
     private readonly ISurveyRepository _surveyRepository;
 
-    public CreateMutipleChoiceQuestionCommandHandler(ISurveyRepository surveyRepository)
+    public CreateTextQuestionCommandHandler(ISurveyRepository surveyRepository)
     {
         _surveyRepository = surveyRepository;
     }
     
     public async Task<Result<Guid>> Handle(
-        CreateMultipleChoiceQuestionCommand request,
+        CreateTextQuestionCommand request,
         CancellationToken cancellationToken)
     {
         var surveyResult = await _surveyRepository.FindAsync(request.SurveyId, cancellationToken);
@@ -38,23 +36,7 @@ public record CreateMutipleChoiceQuestionCommandHandler : IRequestHandler<Create
 
         var order = new Order(request.Order);
 
-        var options = new Collection<MultipleChoiceOption>();
-        foreach (var option in request.Options)
-        {
-            var optionDescriptionResult = Description.Create(option.Description);
-
-            if (!optionDescriptionResult.TryGet(out var optionDescription))
-                return optionDescriptionResult.Error;
-
-            var optionOrder = new Order(option.Order);
-            
-            options.Add(new MultipleChoiceOption(optionOrder, optionDescription));
-        }
-
-        var questionResult = MultipleChoiceQuestion.Create(name, description, order, options);
-
-        if (!questionResult.TryGet(out var question))
-            return questionResult.Error;
+        var question = new TextQuestion(name, description, order);
 
         survey.AddQuestion(question);
         

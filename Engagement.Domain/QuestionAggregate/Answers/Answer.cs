@@ -1,20 +1,17 @@
-namespace Engagement.Domain.QuestionAggregate;
+using Engagement.Domain.QuestionAggregate.ValueObjects;
 
-public class Answer : Entity
+namespace Engagement.Domain.QuestionAggregate.Answers;
+
+public abstract class Answer : Entity
 {
-    public string Value { get; }
-
     public Commentary Commentary { get; }
 
     public User Person { get; }
 
     public DateTimeOffset Date { get; } = DateTimeOffset.UtcNow;
 
-    public Answer(string value, Commentary commentary, User person)
+    protected Answer(Commentary commentary, User person)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(value);
-        
-        Value = value;
         Commentary = commentary;
         Person = person;
     }

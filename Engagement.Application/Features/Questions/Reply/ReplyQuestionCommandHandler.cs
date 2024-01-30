@@ -1,5 +1,7 @@
 using Engagement.Application.Features.Users;
 using Engagement.Domain.QuestionAggregate;
+using Engagement.Domain.QuestionAggregate.Answers;
+using Engagement.Domain.QuestionAggregate.ValueObjects;
 using MediatR;
 
 namespace Engagement.Application.Features.Questions.Reply;

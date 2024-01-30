@@ -22,4 +22,16 @@ public static class QuestionErrors
             Message: "La mise à jour d'une question avec des réponses n'est pas possible", 
             Code: ErrorType.ImpossibleToUpdateQuestionWithAnswers,
             StatusCode: HttpStatusCode.Conflict);
+    
+    public static Error RangeQuestionInvalidValueError
+        => new(
+            Message: "Les questions échelles doivent être entre 0 et 5", 
+            Code: ErrorType.RangeQuestionInvalidValueError,
+            StatusCode: HttpStatusCode.BadRequest);
+    
+    public static Error MultipleChoiceOptionInvalidCountError
+        => new(
+            Message: "Les questions à choix multiple doivent avoir entre 1 et 5 options", 
+            Code: ErrorType.MultipleChoiceOptionInvalidCount,
+            StatusCode: HttpStatusCode.BadRequest);
 }
