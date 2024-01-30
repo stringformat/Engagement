@@ -15,9 +15,12 @@ public class UserReadRepository(EngagementContext context) : ReadRepositoryBase<
 
     public async Task<Result<RetrieveUserResponse>> RetrieveAsync(Guid id, CancellationToken cancellationToken)
     {
-        return await Set
-            .Select(x => new RetrieveUserResponse(x.Id, x.FirstName, x.LastName, x.Email))
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken) 
-               ?? Result<RetrieveUserResponse>.Failure();
+        var user = await Set
+            .SingleOrDefaultAsync(x => x.Id == id, cancellationToken);
+
+        if(user is null)
+            return Result<RetrieveUserResponse>.Failure();
+        
+        return new RetrieveUserResponse(user.Id, user.FirstName, user.LastName, user.Email);
     }
 }

@@ -6,7 +6,7 @@ public static class Endpoint
     {
         app.MapPost("api/campaigns", async (Request request, IMediator mediator) =>
         {
-            var result = await mediator.Send(new CreateCampaignCommand(request.Name, request.Description, request.Population));
+            var result = await mediator.Send(new CreateCampaignCommand(request.Name, request.Description));
             
             return result.IsSuccess 
                 ? Results.Ok(Response.FromCommand(result)) 

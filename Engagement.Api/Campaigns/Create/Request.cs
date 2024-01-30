@@ -1,3 +1,3 @@
 namespace Engagement.Api.Campaigns.Create;
 
-public record Request(string Name, string Description, HashSet<Guid> Population);
+public record Request(string Name, string Description);
