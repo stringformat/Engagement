@@ -13,11 +13,13 @@ public class CampaignConfiguration : IEntityTypeConfiguration<Campaign>
         
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x));
+            .HasConversion(x => x.Value, x => Name.Create(x))
+            .HasMaxLength(Name.MAX_LENTH);
 
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x));
+            .HasConversion(x => x.Value, x => Description.Create(x))
+            .HasMaxLength(Description.MAX_LENTH);
 
         builder
             .HasMany(x => x.Surveys)

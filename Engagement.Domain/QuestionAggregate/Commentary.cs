@@ -2,6 +2,8 @@ namespace Engagement.Domain.QuestionAggregate;
 
 public record Commentary
 {
+    public const int MAX_LENTH = 250;
+    
     public string Value { get; }
     
     private Commentary(string value)
@@ -13,7 +15,9 @@ public record Commentary
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(value);
         
-        return value.Length > 250 ? Result<Commentary>.Failure() : Result<Commentary>.Success(new(value));
+        return value.Length > MAX_LENTH ? 
+            QuestionErrors.CommentaryTooLongError(MAX_LENTH) : 
+            new Commentary(value);
     }
 
     public static EmptyCommentary Empty => new();

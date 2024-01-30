@@ -12,9 +12,9 @@ public record SendingDate
     public static Result<SendingDate> Create(DateTimeOffset value)
     {
         ArgumentNullException.ThrowIfNull(value);
-        
-        if(value == new DateTimeOffset() || value == DateTimeOffset.UnixEpoch || value < DateTimeOffset.UtcNow)
-            return Result<SendingDate>.Failure();
+
+        if (value == new DateTimeOffset() || value == DateTimeOffset.UnixEpoch || value < DateTimeOffset.UtcNow)
+            return SurveyErrors.SendingDateIsInPast;
 
         return new SendingDate(value);
     }

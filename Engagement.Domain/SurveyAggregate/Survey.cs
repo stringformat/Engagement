@@ -31,13 +31,13 @@ public class Survey : Entity, IAggregateRoot
         if(Status is not Status.Draft)
             return Result.Failure();
         
-        if (name is Name.EmptyName && description is Description.EmptyDescription) 
+        if (name is EmptyName && description is EmptyDescription) 
             return Result.Failure();
         
-        if(name is not Name.EmptyName)
+        if(name is not EmptyName)
             Name = name;
         
-        if(description is not Description.EmptyDescription)
+        if(description is not EmptyDescription)
             Description = description;
         
         return Result.Success();

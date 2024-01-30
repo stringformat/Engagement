@@ -23,5 +23,5 @@ public class Answer : Entity
     {
     }
 
-    public bool HasCommentary() => Commentary is not Commentary.EmptyCommentary;
+    public bool HasCommentary() => Commentary is not EmptyCommentary;
 }

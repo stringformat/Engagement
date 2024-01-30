@@ -23,15 +23,15 @@ public class Question : Entity, IAggregateRoot
     public Result Update(Name name, Description description)
     {
         if(HasAnswers())
-            return Result.Failure();
+            return QuestionErrors.ImpossibleToUpdateQuestionWithAnswersError;
         
-        if (name is Name.EmptyName && description is Description.EmptyDescription) 
-            return Result.Failure();
+        if (name is EmptyName && description is EmptyDescription) 
+            return QuestionErrors.DataRequiredWhenUpdateQuestionError;
         
-        if(name is not Name.EmptyName)
+        if(name is not EmptyName)
             Name = name;
         
-        if(description is not Description.EmptyDescription)
+        if(description is not EmptyDescription)
             Description = description;
         
         return Result.Success();

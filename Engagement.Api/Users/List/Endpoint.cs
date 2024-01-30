@@ -9,7 +9,7 @@ public static class Endpoint
         app.MapGet("api/users", async (IMediator mediator) =>
         {
             var responses = await mediator.Send(new ListUserQuery());
-
+            
             return responses.Select(Response.FromQuery);
         });
 

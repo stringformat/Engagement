@@ -2,6 +2,8 @@ namespace Engagement.Domain.Common;
 
 public record Name
 {
+    public const int MAX_LENTH = 50;
+    
     public string Value { get; }
 
     private Name(string value)
@@ -13,7 +15,9 @@ public record Name
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(value);
         
-        return value.Length > 50 ? Result<Name>.Failure() : Result<Name>.Success(new(value));
+        return value.Length > MAX_LENTH ? 
+            CommonErrors.NameTooLongError(MAX_LENTH) : 
+            new Name(value);
     }
     
     public static EmptyName Empty => new();

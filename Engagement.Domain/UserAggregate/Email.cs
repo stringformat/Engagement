@@ -14,8 +14,10 @@ public partial record Email
     public static Result<Email> Create(string value)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(value);
-        
-        return EmailRegex().IsMatch(value) ? Result<Email>.Success(new(value)) : Result<Email>.Failure();
+
+        return EmailRegex().IsMatch(value) ? 
+            new Email(value) : 
+            UserErrors.EmailInvalid;
     }
     
     public static EmptyEmail Empty => new();

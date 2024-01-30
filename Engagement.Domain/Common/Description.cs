@@ -14,7 +14,9 @@ public record Description
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(value);
         
-        return value.Length > MAX_LENTH ? Result<Description>.Failure() : Result<Description>.Success(new(value));
+        return value.Length > MAX_LENTH ? 
+            CommonErrors.DescriptionTooLongError(MAX_LENTH) : 
+            new Description(value);
     }
     
     public static EmptyDescription Empty => new();

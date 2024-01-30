@@ -21,15 +21,15 @@ public class Campaign : Entity, IAggregateRoot
     {
     }
 
-    public Result Update(Name? name, Description? description)
+    public Result Update(Name name, Description description)
     {
-        if (name is null && description is null)
-            return Result.Failure();
-
-        if (name is not null)
+        if (name is EmptyName && description is EmptyDescription)
+            return CampaignErrors.DataRequiredWhenUpdateCampaignError;
+        
+        if(name is not EmptyName)
             Name = name;
-
-        if (description is not null)
+        
+        if(description is not EmptyDescription)
             Description = description;
 
         return Result.Success();
