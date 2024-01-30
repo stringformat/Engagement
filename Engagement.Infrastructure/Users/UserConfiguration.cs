@@ -12,11 +12,13 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder
             .Property(x => x.FirstName)
-            .HasConversion(x => x.Value, x => FirstName.Create(x));
-        
+            .HasConversion(x => x.Value, x => FirstName.Create(x))
+            .HasMaxLength(FirstName.MAX_LENTH);
+
         builder
             .Property(x => x.LastName)
-            .HasConversion(x => x.Value, x => LastName.Create(x));
+            .HasConversion(x => x.Value, x => LastName.Create(x))
+            .HasMaxLength(LastName.MAX_LENTH);
         
         builder
             .Property(x => x.Email)

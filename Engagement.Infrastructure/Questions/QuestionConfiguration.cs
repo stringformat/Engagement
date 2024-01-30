@@ -13,11 +13,13 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x));
-        
+            .HasConversion(x => x.Value, x => Name.Create(x))
+            .HasMaxLength(Name.MAX_LENTH);
+
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x));
+            .HasConversion(x => x.Value, x => Description.Create(x))
+            .HasMaxLength(Description.MAX_LENTH);
         
         builder
             .Property(x => x.Order)
@@ -26,10 +28,11 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
         builder.OwnsMany(x => x.Answers, navigationBuilder =>
         {
             navigationBuilder.HasKey(x => x.Id);
-            
+
             navigationBuilder
                 .Property(x => x.Commentary)
-                .HasConversion(x => x.Value, x => Commentary.Create(x));
+                .HasConversion(x => x.Value, x => Commentary.Create(x))
+                .HasMaxLength(Commentary.MAX_LENTH);
 
             navigationBuilder
                 .HasOne(x => x.Person)

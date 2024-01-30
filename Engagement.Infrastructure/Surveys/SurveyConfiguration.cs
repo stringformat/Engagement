@@ -12,7 +12,8 @@ public class SurveyConfiguration : IEntityTypeConfiguration<Survey>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x));
+            .HasConversion(x => x.Value, x => Name.Create(x))
+            .HasMaxLength(Name.MAX_LENTH);
         
         builder
             .Property(x => x.Description)
