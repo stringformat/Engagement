@@ -1,4 +1,6 @@
 ﻿using Engagement.Domain.QuestionAggregate;
+using Engagement.Domain.QuestionAggregate.Answers;
+using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -38,7 +40,17 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
             navigationBuilder
                 .HasOne(x => x.Person)
                 .WithMany();
+            
+            builder.HasDiscriminator<string>("type")
+                .HasValue<TextAnswer>("text")
+                .HasValue<RangeAnswer>("range")
+                .HasValue<MultipleChoiceAnswer>("multiple_choice");
         });
+
+        builder.HasDiscriminator<string>("type")
+            .HasValue<TextQuestion>("text")
+            .HasValue<RangeQuestion>("range")
+            .HasValue<MultipleChoiceQuestion>("multiple_choice");
 
         builder.Metadata.FindNavigation(nameof(Question.Answers))!.SetPropertyAccessMode(PropertyAccessMode.Field);
     }

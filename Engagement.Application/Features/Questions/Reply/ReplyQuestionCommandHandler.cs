@@ -1,8 +1,10 @@
 using Engagement.Application.Features.Users;
 using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Answers;
+using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 using MediatR;
+using static Engagement.Domain.QuestionAggregate.Answers.RangeAnswer;
 
 namespace Engagement.Application.Features.Questions.Reply;
 
@@ -19,27 +21,53 @@ public record ReplyQuestionCommandHandler : IRequestHandler<ReplyQuestionCommand
 
     public async Task<Result<Guid>> Handle(ReplyQuestionCommand request, CancellationToken cancellationToken)
     {
-        var (isRetrievedQuestion, question, questionError) = await _questionRepository.FindAsync(request.Id, cancellationToken);
+        var questionResult = await _questionRepository.FindAsync(request.Id, cancellationToken);
 
-        if (!isRetrievedQuestion)
-            return questionError;
+        if (!questionResult.TryGet(out var question))
+            return questionResult.Error;
         
-        var (isRetrievedUser, user, userError) = await _userRepository.FindAsync(request.Answer.UserId, cancellationToken);
+        var userResult = await _userRepository.FindAsync(request.Answer.UserId, cancellationToken);
 
-        if (!isRetrievedUser)
-            return userError;
+        if (!userResult.TryGet(out var user))
+            return userResult.Error;
 
-        var (isCreatedCommentary, commentary, commentaryError) = request.Answer.Commentary is not null
+        var (created, commentary, error) = request.Answer.Commentary is not null
             ? Commentary.Create(request.Answer.Commentary)
             : Commentary.Empty;
 
-        if (!isCreatedCommentary)
-            return commentaryError;
+        if (!created)
+            return error;
         
-        question.Reply(new Answer(request.Answer.Value, commentary, user));
+        switch (request.Answer)
+        {
+            case ReplyQuestionCommand.TextAnswerCommand text:
+                question.Reply(new TextAnswer(text.Value, commentary, user));
+                break;
+            case ReplyQuestionCommand.RangeAnswerCommand range:
+                var answerResult = RangeAnswer.Create(range.Value, commentary, user);
+                if (!answerResult.TryGet(out var answer))
+                    return answerResult.Error;
+                question.Reply(answer);
+                break;
+            case ReplyQuestionCommand.MultipleChoiceAnswerCommand multipleChoice:
+                question.Reply(CreateMultipleChoiceAnswer(multipleChoice.OptionId, commentary, user, (MultipleChoiceQuestion)question));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
         
         _questionRepository.Update(question);
 
         return question.Id;
+    }
+
+    private static MultipleChoiceAnswer CreateMultipleChoiceAnswer(
+        Guid optionId, 
+        Commentary commentary, 
+        User person, 
+        MultipleChoiceQuestion question)
+    {
+        var option = question.GetOption(optionId);
+        return new MultipleChoiceAnswer(option, commentary, person);
     }
 }

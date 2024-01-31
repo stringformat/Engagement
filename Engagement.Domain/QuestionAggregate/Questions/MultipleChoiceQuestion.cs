@@ -23,4 +23,9 @@ public class MultipleChoiceQuestion : Question
         
         return new MultipleChoiceQuestion(name, description, order, options);
     }
+
+    public Result<MultipleChoiceOption> GetOption(Guid id)
+    {
+        return _options.SingleOrDefault(x => x.Id == id) ?? Result<MultipleChoiceOption>.Failure();
+    }
 }

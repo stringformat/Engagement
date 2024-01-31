@@ -8,11 +8,11 @@ using MediatR;
 
 namespace Engagement.Application.Features.Questions.Create;
 
-public record CreateMutipleChoiceQuestionCommandHandler : IRequestHandler<CreateMultipleChoiceQuestionCommand, Result<Guid>>
+public record CreateMultipleChoiceQuestionCommandHandler : IRequestHandler<CreateMultipleChoiceQuestionCommand, Result<Guid>>
 {
     private readonly ISurveyRepository _surveyRepository;
 
-    public CreateMutipleChoiceQuestionCommandHandler(ISurveyRepository surveyRepository)
+    public CreateMultipleChoiceQuestionCommandHandler(ISurveyRepository surveyRepository)
     {
         _surveyRepository = surveyRepository;
     }
