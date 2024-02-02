@@ -2,6 +2,7 @@ using Engagement.Application.Features.Questions;
 using Engagement.Application.Features.Questions.List;
 using Engagement.Application.Features.Questions.Retrieve;
 using Engagement.Domain.QuestionAggregate;
+using Engagement.Domain.QuestionAggregate.Answers;
 
 namespace Engagement.Infrastructure.Questions;
 
@@ -29,8 +30,19 @@ public class QuestionReadRepository(EngagementContext context) : ReadRepositoryB
                 x.Name, 
                 x.Description, 
                 x.Order, 
-                x.Answers.Select(y => new RetrieveQuestionResponse.AnswerResponse(y.Value, y.Commentary, y.Person.Id, y.Date)).ToImmutableList()))
+                x.Answers.Select(ConvertToAnswerResponse).ToImmutableList()))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken) 
                ?? Result<RetrieveQuestionResponse>.Failure();
+    }
+
+    private static RetrieveQuestionResponse.AnswerResponse ConvertToAnswerResponse(Answer answer)
+    {
+        return answer switch
+        {
+            TextAnswer text => new RetrieveQuestionResponse.TextAnswerResponse(text.Value, text.Commentary, text.User.Id, text.Date),
+            RangeAnswer range => new RetrieveQuestionResponse.RangeAnswerResponse(range.Value, range.Commentary, range.User.Id, range.Date),
+            MultipleChoiceAnswer multipleChoice => new RetrieveQuestionResponse.MultipleChoiceAnswerResponse(multipleChoice.Option.Id, multipleChoice.Commentary, multipleChoice.User.Id, multipleChoice.Date),
+            _ => throw new ArgumentOutOfRangeException(nameof(answer), answer, null)
+        };
     }
 }

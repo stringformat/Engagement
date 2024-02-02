@@ -1,5 +1,4 @@
 using Engagement.Domain.QuestionAggregate.Answers;
-using Engagement.Domain.QuestionAggregate.ValueObjects;
 
 namespace Engagement.Domain.QuestionAggregate;
 
@@ -19,9 +18,8 @@ public abstract class Question : Entity, IAggregateRoot
         Order = order;
     }
 
-    private Question()
-    {
-    }
+    //ORM
+    protected Question() { }
 
     public Result Update(Name name, Description description)
     {
@@ -49,7 +47,17 @@ public abstract class Question : Entity, IAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(answer);
 
+        if (answer is EmptyAnswer)
+            throw new InvalidOperationException();
+
         _answers.Add(answer);
+    }
+
+    public void Ignore(User user)
+    {
+        ArgumentNullException.ThrowIfNull(user);
+        
+        _answers.Add(Answer.Ignore(user));
     }
 
     private bool HasAnswers() => _answers.Count > 0;

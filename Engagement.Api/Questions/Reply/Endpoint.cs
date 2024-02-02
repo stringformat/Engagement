@@ -8,12 +8,12 @@ public static class Endpoint
     {
         app.MapPost("api/questions/{id:guid}/reply", async (Guid id, Request request, IMediator mediator) =>
         {
-            var command = new ReplyQuestionCommand(id, new ReplyQuestionCommand.AnswerCommand(request.Value, request.Commentary, request.UserId));
+            var command = new ReplyQuestionCommand(id, request.ToCommand());
             var response = await mediator.Send(command);
             
             return response.IsSuccess 
-                ? Results.Ok(Response.FromCommand(response)) 
-                : Results.BadRequest();
+                ? Results.Ok(Response.FromCommand(response.Value)) 
+                : response.Error.ToResponse();
         });
 
         return app;

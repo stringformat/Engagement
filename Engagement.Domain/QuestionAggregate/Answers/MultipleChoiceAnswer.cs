@@ -1,9 +1,16 @@
-using Engagement.Domain.QuestionAggregate.Questions;
-using Engagement.Domain.QuestionAggregate.ValueObjects;
-
 namespace Engagement.Domain.QuestionAggregate.Answers;
 
-public class MultipleChoiceAnswer(MultipleChoiceOption option, Commentary commentary, User person) : Answer(commentary, person)
+public class MultipleChoiceAnswer : Answer
 {
-    public MultipleChoiceOption Option { get; set; } = option;
+    public MultipleChoiceAnswer(Option option, Commentary commentary, User person) : base(commentary, person)
+    {
+        Option = option;
+    }
+
+    //ORM
+    private MultipleChoiceAnswer()
+    {
+    }
+
+    public Option Option { get; }
 }

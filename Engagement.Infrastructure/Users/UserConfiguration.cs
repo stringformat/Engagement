@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Engagement.Infrastructure.Users;
+﻿namespace Engagement.Infrastructure.Users;
 
 public class UserConfiguration : IEntityTypeConfiguration<User>
 {

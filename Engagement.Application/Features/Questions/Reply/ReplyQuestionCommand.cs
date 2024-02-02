@@ -10,5 +10,5 @@ public record ReplyQuestionCommand(Guid Id, ReplyQuestionCommand.AnswerCommand A
     
     public record RangeAnswerCommand(uint Value, string? Commentary, Guid UserId) : AnswerCommand(Commentary, UserId);
     
-    public record MultipleChoiceAnswerCommand(Guid OptionId, string? Commentary, Guid UserId) : AnswerCommand(Commentary, UserId);
+    public record MultipleChoiceAnswerCommand(Guid Value, string? Commentary, Guid UserId) : AnswerCommand(Commentary, UserId);
 }

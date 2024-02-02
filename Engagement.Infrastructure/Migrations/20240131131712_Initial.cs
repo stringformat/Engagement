@@ -16,8 +16,8 @@ namespace Engagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,8 +29,8 @@ namespace Engagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -43,7 +43,7 @@ namespace Engagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     SendingDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
@@ -64,10 +64,11 @@ namespace Engagement.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Order = table.Column<long>(type: "bigint", nullable: false),
-                    SurveyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    SurveyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,40 +81,78 @@ namespace Engagement.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Option",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Order = table.Column<long>(type: "bigint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    MultipleChoiceQuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Option", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Option_Question_MultipleChoiceQuestionId",
+                        column: x => x.MultipleChoiceQuestionId,
+                        principalTable: "Question",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Answer",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Commentary = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PersonId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Commentary = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuestionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Type = table.Column<string>(type: "nvarchar(21)", maxLength: 21, nullable: false),
+                    OptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    RangeAnswer_Value = table.Column<long>(type: "bigint", nullable: true),
+                    TextAnswer_Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answer_Question_QuestionId",
-                        column: x => x.QuestionId,
-                        principalTable: "Question",
+                        name: "FK_Answer_Option_OptionId",
+                        column: x => x.OptionId,
+                        principalTable: "Option",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Answer_User_PersonId",
-                        column: x => x.PersonId,
+                        name: "FK_Answer_Question_QuestionId",
+                        column: x => x.QuestionId,
+                        principalTable: "Question",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Answer_User_UserId",
+                        column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answer_PersonId",
+                name: "IX_Answer_OptionId",
                 table: "Answer",
-                column: "PersonId");
+                column: "OptionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Answer_QuestionId",
                 table: "Answer",
                 column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Answer_UserId",
+                table: "Answer",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Option_MultipleChoiceQuestionId",
+                table: "Option",
+                column: "MultipleChoiceQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_SurveyId",
@@ -133,10 +172,13 @@ namespace Engagement.Infrastructure.Migrations
                 name: "Answer");
 
             migrationBuilder.DropTable(
-                name: "Question");
+                name: "Option");
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Question");
 
             migrationBuilder.DropTable(
                 name: "Survey");

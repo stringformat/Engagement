@@ -38,7 +38,7 @@ public record CreateMultipleChoiceQuestionCommandHandler : IRequestHandler<Creat
 
         var order = new Order(request.Order);
 
-        var options = new Collection<MultipleChoiceOption>();
+        var options = new Collection<Option>();
         foreach (var option in request.Options)
         {
             var optionDescriptionResult = Description.Create(option.Description);
@@ -48,7 +48,7 @@ public record CreateMultipleChoiceQuestionCommandHandler : IRequestHandler<Creat
 
             var optionOrder = new Order(option.Order);
             
-            options.Add(new MultipleChoiceOption(optionOrder, optionDescription));
+            options.Add(new Option(optionOrder, optionDescription));
         }
 
         var questionResult = MultipleChoiceQuestion.Create(name, description, order, options);

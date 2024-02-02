@@ -1,5 +1,3 @@
-using Engagement.Application.Features.Questions.Create;
-
 namespace Engagement.Api.Questions.Create;
 
 public static class Endpoint
@@ -8,11 +6,11 @@ public static class Endpoint
     {
         app.MapPost("api/surveys/{surveyId:guid}/questions", async (Guid surveyId, Request request, IMediator mediator) =>
         {
-            var result = await mediator.Send(new CreateQuestionCommand(surveyId, request.Name, request.Description, request.Order));
+            var response = await mediator.Send(request.ToCommand(surveyId));
             
-            return result.IsSuccess 
-                ? Results.Ok(Response.FromCommand(result)) 
-                : Results.BadRequest();
+            return response.IsSuccess
+                ? Results.Ok(Response.FromCommand(response.Value)) 
+                : response.Error.ToResponse();
         });
 
         return app;

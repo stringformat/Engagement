@@ -18,4 +18,8 @@
       <ProjectReference Include="..\Engagement.Application\Engagement.Application.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 </Project>

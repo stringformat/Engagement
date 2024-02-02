@@ -13,3 +13,4 @@ global using Engagement.Domain.SurveyAggregate;
 global using Engagement.Domain.UserAggregate;
 global using Engagement.Infrastructure.Common;
 global using Microsoft.EntityFrameworkCore;
+global using Microsoft.EntityFrameworkCore.Metadata.Builders;

@@ -50,7 +50,7 @@ public record ReplyQuestionCommandHandler : IRequestHandler<ReplyQuestionCommand
                 question.Reply(answer);
                 break;
             case ReplyQuestionCommand.MultipleChoiceAnswerCommand multipleChoice:
-                question.Reply(CreateMultipleChoiceAnswer(multipleChoice.OptionId, commentary, user, (MultipleChoiceQuestion)question));
+                question.Reply(CreateMultipleChoiceAnswer(multipleChoice.Value, commentary, user, (MultipleChoiceQuestion)question));
                 break;
             default:
                 throw new ArgumentOutOfRangeException();

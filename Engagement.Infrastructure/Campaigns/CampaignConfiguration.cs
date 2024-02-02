@@ -1,5 +1,4 @@
 ﻿using Engagement.Domain.CampaignAggregate;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Engagement.Infrastructure.Campaigns;
 

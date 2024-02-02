@@ -1,24 +1,27 @@
-using Engagement.Domain.QuestionAggregate.ValueObjects;
-
 namespace Engagement.Domain.QuestionAggregate.Answers;
 
 public abstract class Answer : Entity
 {
     public Commentary Commentary { get; }
 
-    public User Person { get; }
+    public User User { get; }
 
     public DateTimeOffset Date { get; } = DateTimeOffset.UtcNow;
 
-    protected Answer(Commentary commentary, User person)
+    protected Answer(Commentary commentary, User user)
     {
         Commentary = commentary;
-        Person = person;
+        User = user;
     }
 
-    private Answer()
+    //ORM
+    protected Answer()
     {
     }
 
     public bool HasCommentary() => Commentary is not EmptyCommentary;
+    
+    public static EmptyAnswer Ignore(User user) => new(user);
+    
+    public class EmptyAnswer(User user) : Answer(Commentary.Empty, user);
 }

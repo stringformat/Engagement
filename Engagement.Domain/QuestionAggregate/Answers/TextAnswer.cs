@@ -1,5 +1,3 @@
-using Engagement.Domain.QuestionAggregate.ValueObjects;
-
 namespace Engagement.Domain.QuestionAggregate.Answers;
 
 public class TextAnswer : Answer
@@ -12,5 +10,10 @@ public class TextAnswer : Answer
         ArgumentException.ThrowIfNullOrWhiteSpace(value);
         
         Value = value;
+    }
+    
+    //ORM
+    private TextAnswer()
+    {
     }
 }

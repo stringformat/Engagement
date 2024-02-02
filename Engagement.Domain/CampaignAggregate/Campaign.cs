@@ -16,10 +16,6 @@ public class Campaign : Entity, IAggregateRoot
         Name = name;
         Description = description;
     }
-    
-    private Campaign()
-    {
-    }
 
     public Result Update(Name name, Description description)
     {

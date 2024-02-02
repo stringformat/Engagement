@@ -1,8 +1,6 @@
 ﻿using Engagement.Domain.QuestionAggregate;
-using Engagement.Domain.QuestionAggregate.Answers;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Engagement.Infrastructure.Questions;
 
@@ -16,38 +14,23 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x))
+            .HasConversion(x => x.Value, x => Name.Create(x).Value)
             .HasMaxLength(Name.MAX_LENTH);
 
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x))
+            .HasConversion(x => x.Value, x => Description.Create(x).Value)
             .HasMaxLength(Description.MAX_LENTH);
         
         builder
             .Property(x => x.Order)
             .HasConversion(x => x.Value, x => new Order(x));
 
-        builder.OwnsMany(x => x.Answers, navigationBuilder =>
-        {
-            navigationBuilder.HasKey(x => x.Id);
-
-            navigationBuilder
-                .Property(x => x.Commentary)
-                .HasConversion(x => x.Value, x => Commentary.Create(x))
-                .HasMaxLength(Commentary.MAX_LENTH);
-
-            navigationBuilder
-                .HasOne(x => x.Person)
-                .WithMany();
-            
-            builder.HasDiscriminator<string>("type")
-                .HasValue<TextAnswer>("text")
-                .HasValue<RangeAnswer>("range")
-                .HasValue<MultipleChoiceAnswer>("multiple_choice");
-        });
-
-        builder.HasDiscriminator<string>("type")
+        builder
+            .HasMany(x => x.Answers)
+            .WithOne();
+        
+        builder.HasDiscriminator<string>("Type")
             .HasValue<TextQuestion>("text")
             .HasValue<RangeQuestion>("range")
             .HasValue<MultipleChoiceQuestion>("multiple_choice");

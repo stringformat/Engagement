@@ -1,8 +1,6 @@
-using Engagement.Domain.QuestionAggregate.ValueObjects;
-
 namespace Engagement.Domain.QuestionAggregate.Questions;
 
-public class MultipleChoiceOption(Order order, Description description) : Entity
+public class Option(Order order, Description description) : Entity
 {
     public Order Order { get; } = order;
 

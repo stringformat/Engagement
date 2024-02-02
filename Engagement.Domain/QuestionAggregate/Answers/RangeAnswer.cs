@@ -1,5 +1,3 @@
-using Engagement.Domain.QuestionAggregate.ValueObjects;
-
 namespace Engagement.Domain.QuestionAggregate.Answers;
 
 public class RangeAnswer : Answer
@@ -10,6 +8,11 @@ public class RangeAnswer : Answer
         : base(commentary, person)
     {
         Value = value;
+    }
+
+    //ORM
+    private RangeAnswer()
+    {
     }
 
     public static Result<RangeAnswer> Create(uint value, Commentary commentary, User person)

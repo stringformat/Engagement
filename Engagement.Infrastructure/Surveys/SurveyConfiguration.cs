@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-namespace Engagement.Infrastructure.Surveys;
+﻿namespace Engagement.Infrastructure.Surveys;
 
 public class SurveyConfiguration : IEntityTypeConfiguration<Survey>
 {

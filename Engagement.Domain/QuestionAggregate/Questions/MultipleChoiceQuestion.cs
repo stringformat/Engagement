@@ -1,22 +1,24 @@
 using Engagement.Domain.QuestionAggregate.Answers;
-using Engagement.Domain.QuestionAggregate.ValueObjects;
 
 namespace Engagement.Domain.QuestionAggregate.Questions;
 
 public class MultipleChoiceQuestion : Question
 {
-    public override ImmutableList<MultipleChoiceAnswer> Answers { get; }
+    public override ImmutableList<MultipleChoiceAnswer> Answers => [];
     
-    private readonly List<MultipleChoiceOption> _options = [];
-    public virtual ImmutableList<MultipleChoiceOption> Options => _options.ToImmutableList();
+    private readonly List<Option> _options = [];
+    public virtual ImmutableList<Option> Options => _options.ToImmutableList();
     
-    private MultipleChoiceQuestion(Name name, Description description, Order order, IEnumerable<MultipleChoiceOption> options) 
+    private MultipleChoiceQuestion(Name name, Description description, Order order, IEnumerable<Option> options) 
         : base(name, description, order)
     {
         _options.AddRange(options);
     }
 
-    public static Result<MultipleChoiceQuestion> Create(Name name, Description description, Order order, Collection<MultipleChoiceOption> options)
+    //ORM
+    private MultipleChoiceQuestion() { }
+
+    public static Result<MultipleChoiceQuestion> Create(Name name, Description description, Order order, Collection<Option> options)
     {
         if (options.Count is < 1 or > 5)
             return QuestionErrors.MultipleChoiceOptionInvalidCountError;
@@ -24,8 +26,8 @@ public class MultipleChoiceQuestion : Question
         return new MultipleChoiceQuestion(name, description, order, options);
     }
 
-    public Result<MultipleChoiceOption> GetOption(Guid id)
+    public Result<Option> GetOption(Guid id)
     {
-        return _options.SingleOrDefault(x => x.Id == id) ?? Result<MultipleChoiceOption>.Failure();
+        return _options.SingleOrDefault(x => x.Id == id) ?? Result<Option>.Failure();
     }
 }
