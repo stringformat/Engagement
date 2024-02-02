@@ -34,9 +34,7 @@ public record CreateTextQuestionCommandHandler : IRequestHandler<CreateTextQuest
         if (!descriptionResult.TryGet(out var description))
             return descriptionResult.Error;
 
-        var order = new Order(request.Order);
-
-        var question = new TextQuestion(name, description, order);
+        var question = new TextQuestion(name, description, request.Order);
 
         survey.AddQuestion(question);
         

@@ -11,7 +11,7 @@ public static class Endpoint
             var response = await mediator.Send(new RetrieveQuestionQuery(id));
             
             return response.IsSuccess 
-                ? Results.Ok(Response.FromQuery(response)) 
+                ? Results.Ok(Response.FromQuery(response))
                 : Results.BadRequest();
         });
 

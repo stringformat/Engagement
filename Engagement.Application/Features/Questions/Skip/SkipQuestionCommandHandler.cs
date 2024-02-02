@@ -1,23 +1,20 @@
 using Engagement.Application.Features.Users;
-using Engagement.Domain.QuestionAggregate.Answers;
-using Engagement.Domain.QuestionAggregate.Questions;
-using Engagement.Domain.QuestionAggregate.ValueObjects;
 using MediatR;
 
-namespace Engagement.Application.Features.Questions.Ignore;
+namespace Engagement.Application.Features.Questions.Skip;
 
-public record IgnoreQuestionCommandHandler : IRequestHandler<IgnoreQuestionCommand, Result>
+public record SkipQuestionCommandHandler : IRequestHandler<SkipQuestionCommand, Result>
 {
     private readonly IQuestionRepository _questionRepository;
     private readonly IUserRepository _userRepository;
 
-    public IgnoreQuestionCommandHandler(IQuestionRepository questionRepository, IUserRepository userRepository)
+    public SkipQuestionCommandHandler(IQuestionRepository questionRepository, IUserRepository userRepository)
     {
         _questionRepository = questionRepository;
         _userRepository = userRepository;
     }
 
-    public async Task<Result> Handle(IgnoreQuestionCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(SkipQuestionCommand request, CancellationToken cancellationToken)
     {
         var questionResult = await _questionRepository.FindAsync(request.Id, cancellationToken);
 
@@ -29,7 +26,7 @@ public record IgnoreQuestionCommandHandler : IRequestHandler<IgnoreQuestionComma
         if (!userResult.TryGet(out var user))
             return userResult.Error;
 
-        question.Ignore(user);
+        question.Skip(user);
         _questionRepository.Update(question);
 
         return Result.Success();

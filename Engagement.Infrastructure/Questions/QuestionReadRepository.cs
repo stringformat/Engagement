@@ -29,7 +29,7 @@ public class QuestionReadRepository(EngagementContext context) : ReadRepositoryB
                 x.Id, 
                 x.Name, 
                 x.Description, 
-                x.Order, 
+                x.Order,
                 x.Answers.Select(ConvertToAnswerResponse).ToImmutableList()))
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken) 
                ?? Result<RetrieveQuestionResponse>.Failure();
@@ -39,9 +39,10 @@ public class QuestionReadRepository(EngagementContext context) : ReadRepositoryB
     {
         return answer switch
         {
-            TextAnswer text => new RetrieveQuestionResponse.TextAnswerResponse(text.Value, text.Commentary, text.User.Id, text.Date),
-            RangeAnswer range => new RetrieveQuestionResponse.RangeAnswerResponse(range.Value, range.Commentary, range.User.Id, range.Date),
-            MultipleChoiceAnswer multipleChoice => new RetrieveQuestionResponse.MultipleChoiceAnswerResponse(multipleChoice.Option.Id, multipleChoice.Commentary, multipleChoice.User.Id, multipleChoice.Date),
+            Answer.EmptyAnswer empty => new RetrieveQuestionResponse.EmptyAnswerResponse(empty.Id, empty.User.Id, empty.Date),
+            TextAnswer text => new RetrieveQuestionResponse.TextAnswerResponse(text.Id, text.Value, text.Commentary, text.User.Id, text.Date),
+            RangeAnswer range => new RetrieveQuestionResponse.RangeAnswerResponse(range.Id, range.Value, range.Commentary, range.User.Id, range.Date),
+            MultipleChoiceAnswer multipleChoice => new RetrieveQuestionResponse.MultipleChoiceAnswerResponse(multipleChoice.Id, multipleChoice.Option.Id, multipleChoice.Commentary, multipleChoice.User.Id, multipleChoice.Date),
             _ => throw new ArgumentOutOfRangeException(nameof(answer), answer, null)
         };
     }

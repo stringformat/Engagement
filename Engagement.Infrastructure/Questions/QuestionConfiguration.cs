@@ -14,12 +14,12 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
 
         builder
             .Property(x => x.Name)
-            .HasConversion(x => x.Value, x => Name.Create(x).Value)
+            .HasConversion(x => x.Value, x => Name.Create(x))
             .HasMaxLength(Name.MAX_LENTH);
 
         builder
             .Property(x => x.Description)
-            .HasConversion(x => x.Value, x => Description.Create(x).Value)
+            .HasConversion(x => x.Value, x => Description.Create(x))
             .HasMaxLength(Description.MAX_LENTH);
         
         builder

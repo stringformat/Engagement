@@ -34,9 +34,7 @@ public record CreateRangeQuestionCommandHandler : IRequestHandler<CreateRangeQue
         if (!descriptionResult.TryGet(out var description))
             return descriptionResult.Error;
 
-        var order = new Order(request.Order);
-
-        var question = new RangeQuestion(name, description, order);
+        var question = new RangeQuestion(name, description, request.Order);
 
         survey.AddQuestion(question);
         

@@ -47,17 +47,17 @@ public abstract class Question : Entity, IAggregateRoot
     {
         ArgumentNullException.ThrowIfNull(answer);
 
-        if (answer is EmptyAnswer)
+        if (answer.IsEmpty)
             throw new InvalidOperationException();
 
         _answers.Add(answer);
     }
 
-    public void Ignore(User user)
+    public void Skip(User user)
     {
         ArgumentNullException.ThrowIfNull(user);
         
-        _answers.Add(Answer.Ignore(user));
+        _answers.Add(Answer.Empty(user));
     }
 
     private bool HasAnswers() => _answers.Count > 0;
