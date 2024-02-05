@@ -5,21 +5,25 @@ namespace Engagement.Domain.SurveyAggregate;
 public class Survey : Entity, IAggregateRoot
 {
     public Name Name { get; private set; }
-
+    
     public Description Description { get; private set; }
-
+    
     public SendingDate SendingDate { get; private set; }
-
+    
     public Status Status { get; private set; } = Status.Draft;
     
-    private readonly Collection<Question> _questions = [];
+    private readonly ICollection<Question> _questions = [];
     public virtual ImmutableList<Question> Questions => _questions.ToImmutableList();
     
-    public Survey(Name name, Description description, SendingDate sendingDate)
+    private readonly ICollection<User> _users = [];
+    public virtual ImmutableList<User> Users => _users.ToImmutableList();
+    
+    public Survey(Name name, Description description, SendingDate sendingDate, IEnumerable<User> users)
     {
         Name = name;
         Description = description;
         SendingDate = sendingDate;
+        _users = users.ToList();
     }
 
     private Survey()
@@ -75,5 +79,10 @@ public class Survey : Entity, IAggregateRoot
         ArgumentNullException.ThrowIfNull(question);
         
         _questions.Add(question);
+    }
+
+    public int RateParticipation()
+    {
+        var test = Questions.Select(x => x.)
     }
 }

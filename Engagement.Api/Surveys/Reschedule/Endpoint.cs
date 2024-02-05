@@ -8,11 +8,11 @@ public static class Endpoint
     {
         app.MapPost("api/campaigns/{campaignId:guid}/surveys/{id:guid}/reschedule", async (Guid campaignId, Guid id, Request request, IMediator mediator) =>
         {
-            var result = await mediator.Send(new RescheduleSurveyCommand(campaignId, id, request.SendingDate));
+            var response = await mediator.Send(new RescheduleSurveyCommand(campaignId, id, request.SendingDate));
             
-            return result.IsSuccess 
-                ? Results.Ok(Response.FromCommand(result)) 
-                : Results.BadRequest();
+            return response.IsSuccess 
+                ? Results.Ok(Response.FromCommand(response)) 
+                : response.Error.ToResponse();
         });
 
         return app;

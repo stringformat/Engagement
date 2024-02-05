@@ -7,15 +7,17 @@ public abstract class Question : Entity, IAggregateRoot
     public Name Name { get; private set; }
     public Description Description { get; private set; }
     public Order Order { get; private set; }
+    public Pillar Pillar { get; }
     
-    private readonly Collection<Answer> _answers = [];
+    private readonly ICollection<Answer> _answers = [];
     public virtual IEnumerable<Answer> Answers => _answers.ToImmutableList();
 
-    protected Question(Name name, Description description, Order order)
+    protected Question(Name name, Description description, Order order, Pillar pillar)
     {
         Name = name;
         Description = description;
         Order = order;
+        Pillar = pillar;
     }
 
     //ORM

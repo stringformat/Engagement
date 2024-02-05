@@ -12,7 +12,7 @@ public static class Endpoint
             
             return response.IsSuccess
                 ? Results.Ok((object?)Response.FromQuery(response)) 
-                : Results.BadRequest();
+                : response.Error.ToResponse();
         });
 
         return app;
