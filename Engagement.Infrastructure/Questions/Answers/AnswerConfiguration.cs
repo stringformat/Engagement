@@ -13,7 +13,7 @@ public class AnswerConfiguration : IEntityTypeConfiguration<Answer>
             
         builder
             .Property(x => x.Commentary)
-            .HasConversion(x => x.Value, x => Commentary.Create(x).Value)
+            .HasConversion(x => x.Value, x => Commentary.Create(x))
             .HasMaxLength(Commentary.MAX_LENTH);
 
         builder

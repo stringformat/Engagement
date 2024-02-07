@@ -9,8 +9,8 @@ public class MultipleChoiceQuestion : Question
     private readonly List<Option> _options = [];
     public virtual ImmutableList<Option> Options => _options.ToImmutableList();
     
-    private MultipleChoiceQuestion(Name name, Description description, Order order, IEnumerable<Option> options) 
-        : base(name, description, order)
+    private MultipleChoiceQuestion(Name name, Description description, Order order, Pillar pillar, IEnumerable<Option> options) 
+        : base(name, description, order, pillar)
     {
         _options.AddRange(options);
     }
@@ -18,12 +18,12 @@ public class MultipleChoiceQuestion : Question
     //ORM
     private MultipleChoiceQuestion() { }
 
-    public static Result<MultipleChoiceQuestion> Create(Name name, Description description, Order order, Collection<Option> options)
+    public static Result<MultipleChoiceQuestion> Create(Name name, Description description, Order order, Pillar pillar, Collection<Option> options)
     {
         if (options.Count is < 1 or > 5)
             return QuestionErrors.MultipleChoiceOptionInvalidCountError;
         
-        return new MultipleChoiceQuestion(name, description, order, options);
+        return new MultipleChoiceQuestion(name, description, order, pillar, options);
     }
 
     public Result<Option> GetOption(Guid id)

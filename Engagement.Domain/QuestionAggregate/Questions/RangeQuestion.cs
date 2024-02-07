@@ -6,8 +6,8 @@ public class RangeQuestion : Question
 {
     public override ImmutableList<RangeAnswer> Answers => [];
 
-    public RangeQuestion(Name name, Description description, Order order) 
-        : base(name, description, order)
+    public RangeQuestion(Name name, Description description, Order order, Pillar pillar) 
+        : base(name, description, order, pillar)
     {
     }
     

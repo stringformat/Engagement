@@ -1,4 +1,7 @@
+using Engagement.Api.Questions.Skip;
+
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddHttpLogging(options => options.LoggingFields = HttpLoggingFields.RequestBody | HttpLoggingFields.ResponseBody);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
@@ -25,6 +28,7 @@ app.MapQuestionList();
 app.MapQuestionReply();
 app.MapQuestionRetrieve();
 app.MapQuestionUpdate();
+app.MapQuestionSkip();
 
 app.MapUserCreate();
 app.MapUserList();

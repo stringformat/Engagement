@@ -6,8 +6,8 @@ public class TextQuestion : Question
 {
     public override ImmutableList<TextAnswer> Answers => [];
 
-    public TextQuestion(Name name, Description description, Order order) 
-        : base(name, description, order)
+    public TextQuestion(Name name, Description description, Order order, Pillar pillar) 
+        : base(name, description, order, pillar)
     {
     }
     

@@ -20,8 +20,10 @@ public abstract class Answer : Entity
     }
 
     public bool HasCommentary() => Commentary is not EmptyCommentary;
+
+    public bool IsEmpty => this is EmptyAnswer;
     
-    public static EmptyAnswer Ignore(User user) => new(user);
+    public static EmptyAnswer Empty(User user) => new(user);
     
     public class EmptyAnswer(User user) : Answer(Commentary.Empty, user);
 }
