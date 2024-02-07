@@ -1,5 +1,3 @@
 namespace Engagement.Application.Features.Surveys.Analyze;
 
-public class AnalyzeSurveyResponse
-{
-}
+public record AnalyzeSurveyResponse(int ParticipationRate);

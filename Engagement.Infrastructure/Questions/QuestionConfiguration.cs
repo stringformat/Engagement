@@ -36,5 +36,6 @@ public class QuestionConfiguration : IEntityTypeConfiguration<Question>
             .HasValue<MultipleChoiceQuestion>("multiple_choice");
 
         builder.Metadata.FindNavigation(nameof(Question.Answers))!.SetPropertyAccessMode(PropertyAccessMode.Field);
+        builder.Navigation(e => e.Answers).AutoInclude();
     }
 }

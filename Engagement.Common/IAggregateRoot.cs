@@ -1,4 +1,4 @@
-namespace Engagement.Domain.Common;
+namespace Engagement.Common;
 
 public interface IAggregateRoot
 {

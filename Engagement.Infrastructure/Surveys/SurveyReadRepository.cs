@@ -1,4 +1,5 @@
 using Engagement.Application.Features.Surveys.Analyze;
+using Engagement.Common.SpecificationsPattern;
 using Engagement.Domain.CampaignAggregate;
 
 namespace Engagement.Infrastructure.Surveys;
@@ -15,18 +16,18 @@ public class SurveyReadRepository(EngagementContext context) : ReadRepositoryBas
     public async Task<Result<RetrieveSurveyResponse>> RetrieveAsync(Guid id, CancellationToken cancellationToken)
     {
         return await Set
+            .Where(x => x.Id == id)
             .Select(x => new RetrieveSurveyResponse(x.Id, x.Name, x.Description, x.SendingDate, x.Status))
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: cancellationToken) 
+            .FirstOrDefaultAsync(cancellationToken) 
                ?? Result<RetrieveSurveyResponse>.Failure();
     }
 
-    public async Task<Result<AnalyzeSurveyResponse>> Analyze(Guid id)
+    public async Task<Result<AnalyzeSurveyResponse>> Analyze(Specification<Survey> specification, CancellationToken cancellationToken)
     {
-        var population = context.Set<Campaign>()
-            .AsNoTracking()
-            .Include(x => x.Surveys)
-            .SingleOrDefaultAsync(x => x.Surveys)
-        
-        return Set.FirstOrDefault().
+        return await SpecificationQueryBuilder
+            .GetQuery(Set, specification)
+            .Select(x => new AnalyzeSurveyResponse(x.ParticipationRate))
+            .FirstOrDefaultAsync(cancellationToken) ?? Result<AnalyzeSurveyResponse>.Failure();
+            
     }
 }

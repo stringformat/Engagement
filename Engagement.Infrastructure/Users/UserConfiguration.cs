@@ -17,6 +17,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .Property(x => x.LastName)
             .HasConversion(x => x.Value, x => LastName.Create(x))
             .HasMaxLength(LastName.MAX_LENTH);
+
+        builder.Property(x => x.Gender);
+
+        builder.Property(x => x.Age)
+            .HasConversion(x => x.Value, x => Age.Create(x));
         
         builder
             .Property(x => x.Email)

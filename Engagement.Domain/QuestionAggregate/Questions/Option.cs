@@ -1,3 +1,5 @@
+using Engagement.Common;
+
 namespace Engagement.Domain.QuestionAggregate.Questions;
 
 public class Option(Order order, Description description) : Entity

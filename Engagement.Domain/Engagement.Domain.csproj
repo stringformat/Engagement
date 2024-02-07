@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <Folder Include="CampaignAggregate\Specifications\" />
-      <Folder Include="SurveyAggregate\Specifications\" />
     </ItemGroup>
 
 </Project>

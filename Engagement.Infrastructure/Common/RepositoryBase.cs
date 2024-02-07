@@ -1,3 +1,6 @@
+using Engagement.Common;
+using Engagement.Common.SpecificationsPattern;
+
 namespace Engagement.Infrastructure.Common;
 
 public abstract class RepositoryBase<T>(DbContext dbContext)
@@ -23,6 +26,11 @@ public abstract class RepositoryBase<T>(DbContext dbContext)
     public async Task<List<T>> FindAsync(HashSet<Guid> ids, CancellationToken cancellationToken)
     {
         return await dbContext.Set<T>().Where(x => ids.Contains(x.Id)).ToListAsync(cancellationToken: cancellationToken);
+    }
+    
+    public async Task<List<T>> FindAsync(Specification<T> specification, CancellationToken cancellationToken)
+    {
+        return await SpecificationQueryBuilder.GetQuery(dbContext.Set<T>(), specification).ToListAsync(cancellationToken);
     }
 
     public async Task<bool> Exist(Guid id, CancellationToken cancellationToken)

@@ -11,7 +11,7 @@ public static class Endpoint
             var response = await updateQuestionCommand.Handle(new UpdateQuestionRequest(id, request.Name, request.Description), cancellationToken);
             
             return response.IsSuccess 
-                ? Results.Ok() 
+                ? Results.Ok()
                 : response.Error.ToResponse();
         });
 

@@ -1,3 +1,4 @@
+using Engagement.Common;
 using Engagement.Domain.QuestionAggregate;
 
 namespace Engagement.Domain.SurveyAggregate;
@@ -5,11 +6,8 @@ namespace Engagement.Domain.SurveyAggregate;
 public class Survey : Entity, IAggregateRoot
 {
     public Name Name { get; private set; }
-    
     public Description Description { get; private set; }
-    
     public SendingDate SendingDate { get; private set; }
-    
     public Status Status { get; private set; } = Status.Draft;
     
     private readonly ICollection<Question> _questions = [];
@@ -17,6 +15,8 @@ public class Survey : Entity, IAggregateRoot
     
     private readonly ICollection<User> _users = [];
     public virtual ImmutableList<User> Users => _users.ToImmutableList();
+    
+    public int ParticipationRate => (int)_questions.Average(x => x.NumberOfAnswer / _users.Count * 100);
     
     public Survey(Name name, Description description, SendingDate sendingDate, IEnumerable<User> users)
     {
@@ -79,10 +79,5 @@ public class Survey : Entity, IAggregateRoot
         ArgumentNullException.ThrowIfNull(question);
         
         _questions.Add(question);
-    }
-
-    public int RateParticipation()
-    {
-        var test = Questions.Select(x => x.)
     }
 }

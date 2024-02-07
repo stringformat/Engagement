@@ -25,5 +25,7 @@ public class AnswerConfiguration : IEntityTypeConfiguration<Answer>
             .HasValue<RangeAnswer>("range")
             .HasValue<MultipleChoiceAnswer>("multiple_choice")
             .HasValue<Answer.EmptyAnswer>("empty");
+        
+        builder.Navigation(e => e.User).AutoInclude();
     }
 }

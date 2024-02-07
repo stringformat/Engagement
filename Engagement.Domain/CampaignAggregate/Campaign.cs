@@ -1,3 +1,5 @@
+using Engagement.Common;
+
 namespace Engagement.Domain.CampaignAggregate;
 
 public class Campaign : Entity, IAggregateRoot

@@ -1,3 +1,4 @@
+using Engagement.Common;
 using Engagement.Domain.QuestionAggregate.Answers;
 
 namespace Engagement.Domain.QuestionAggregate;
@@ -12,6 +13,10 @@ public abstract class Question : Entity, IAggregateRoot
     private readonly ICollection<Answer> _answers = [];
     public virtual IEnumerable<Answer> Answers => _answers.ToImmutableList();
 
+    public int NumberOfAnswer => _answers.Count;
+    public bool HasAnswers => _answers.Count > 0;
+    public int NumberOfCommentary => _answers.Count(x => x.HasCommentary);
+
     protected Question(Name name, Description description, Order order, Pillar pillar)
     {
         Name = name;
@@ -25,7 +30,7 @@ public abstract class Question : Entity, IAggregateRoot
 
     public Result Update(Name name, Description description)
     {
-        if(HasAnswers())
+        if(HasAnswers)
             return QuestionErrors.ImpossibleToUpdateQuestionWithAnswersError;
         
         if (name is EmptyName && description is EmptyDescription) 
@@ -61,6 +66,4 @@ public abstract class Question : Entity, IAggregateRoot
         
         _answers.Add(Answer.Empty(user));
     }
-
-    private bool HasAnswers() => _answers.Count > 0;
 }
