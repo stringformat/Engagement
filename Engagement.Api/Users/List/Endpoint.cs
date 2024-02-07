@@ -6,9 +6,9 @@ public static class Endpoint
 {
     public static WebApplication MapUserList(this WebApplication app)
     {
-        app.MapGet("api/users", async (IMediator mediator) =>
+        app.MapGet("api/users", async (ListUserQuery listUserQuery, CancellationToken cancellationToken) =>
         {
-            var responses = await mediator.Send(new ListUserQuery());
+            var responses = await listUserQuery.Handle(cancellationToken);
             
             return responses.Select(Response.FromQuery);
         });

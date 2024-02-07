@@ -1,25 +1,22 @@
 using Engagement.Application.Features.Users;
-using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Answers;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
-using MediatR;
-using static Engagement.Domain.QuestionAggregate.Answers.RangeAnswer;
 
 namespace Engagement.Application.Features.Questions.Reply;
 
-public record ReplyQuestionCommandHandler : IRequestHandler<ReplyQuestionCommand, Result<Guid>>
+public record ReplyQuestionCommand : ICommand<ReplyQuestionRequest>
 {
     private readonly IQuestionRepository _questionRepository;
     private readonly IUserRepository _userRepository;
 
-    public ReplyQuestionCommandHandler(IQuestionRepository questionRepository, IUserRepository userRepository)
+    public ReplyQuestionCommand(IQuestionRepository questionRepository, IUserRepository userRepository)
     {
         _questionRepository = questionRepository;
         _userRepository = userRepository;
     }
 
-    public async Task<Result<Guid>> Handle(ReplyQuestionCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ReplyQuestionRequest request, CancellationToken cancellationToken)
     {
         var questionResult = await _questionRepository.FindAsync(request.Id, cancellationToken);
 
@@ -40,16 +37,16 @@ public record ReplyQuestionCommandHandler : IRequestHandler<ReplyQuestionCommand
         
         switch (request.Answer)
         {
-            case ReplyQuestionCommand.TextAnswerCommand text:
+            case ReplyQuestionRequest.TextAnswerRequest text:
                 question.Reply(new TextAnswer(text.Value, commentary, user));
                 break;
-            case ReplyQuestionCommand.RangeAnswerCommand range:
+            case ReplyQuestionRequest.RangeAnswerRequest range:
                 var answerResult = RangeAnswer.Create(range.Value, commentary, user);
                 if (!answerResult.TryGet(out var answer))
                     return answerResult.Error;
                 question.Reply(answer);
                 break;
-            case ReplyQuestionCommand.MultipleChoiceAnswerCommand multipleChoice:
+            case ReplyQuestionRequest.MultipleChoiceAnswerRequest multipleChoice:
                 question.Reply(CreateMultipleChoiceAnswer(multipleChoice.Value, commentary, user, (MultipleChoiceQuestion)question));
                 break;
             default:
@@ -58,7 +55,7 @@ public record ReplyQuestionCommandHandler : IRequestHandler<ReplyQuestionCommand
         
         _questionRepository.Update(question);
 
-        return question.Id;
+        return Result.Success();
     }
 
     private static MultipleChoiceAnswer CreateMultipleChoiceAnswer(

@@ -1,18 +1,16 @@
-using MediatR;
-
 namespace Engagement.Application.Features.Surveys.Close;
 
-public record CloseSurveyCommandHandler : IRequestHandler<CloseSurveyCommand, Result<Guid>>
+public record CloseSurveyCommand : ICommand<CloseSurveyRequest>
 {
     private readonly ISurveyRepository _repository;
 
-    public CloseSurveyCommandHandler(ISurveyRepository repository)
+    public CloseSurveyCommand(ISurveyRepository repository)
     {
         _repository = repository;
     }
 
-    public async Task<Result<Guid>> Handle(
-        CloseSurveyCommand request,
+    public async Task<Result> Handle(
+        CloseSurveyRequest request,
         CancellationToken cancellationToken)
     {
         var (isSurveyRetrieved, survey) = await _repository.FindAsync(request.Id, cancellationToken);
@@ -27,6 +25,6 @@ public record CloseSurveyCommandHandler : IRequestHandler<CloseSurveyCommand, Re
 
         _repository.Update(survey);
 
-        return survey.Id;
+        return Result.Success();
     }
 }

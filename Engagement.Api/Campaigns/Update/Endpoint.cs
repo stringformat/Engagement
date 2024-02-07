@@ -6,12 +6,13 @@ public static class Endpoint
 {
     public static WebApplication MapCampaignUpdate(this WebApplication app)
     {
-        app.MapPut("api/campaigns/{id:guid}", async (Guid id, Request request, IMediator mediator) =>
+        app.MapPut("api/campaigns/{id:guid}", async (Guid id, Request request, UpdateCampaignCommand command, CancellationToken cancellationToken) =>
         {
-            var result = await mediator.Send(new UpdateCampaignCommand(id, request.Name, request.Description));
+            var result = await command.Handle(new UpdateCampaignRequest(id, request.Name, request.Description),
+                cancellationToken);
             
             return result.IsSuccess 
-                ? Results.Ok(Response.FromCommand(result)) 
+                ? Results.Ok()
                 : Results.BadRequest();
         });
 

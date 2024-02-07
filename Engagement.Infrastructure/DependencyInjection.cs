@@ -14,7 +14,6 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         services.AddSqlServer<EngagementContext>("Data Source=(LocalDb)\\MSSQLLocalDB;Initial Catalog=Engagement");
-        services.AddUnitOfWorkMediatRBehavior();
         
         services.TryAddTransient<ICampaignRepository, CampaignRepository>();
         services.TryAddTransient<ISurveyRepository, SurveyRepository>();

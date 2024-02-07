@@ -6,9 +6,9 @@ public static class Endpoint
 {
     public static WebApplication MapCampaignList(this WebApplication app)
     {
-        app.MapGet("api/campaigns", async (IMediator mediator) =>
+        app.MapGet("api/campaigns", async (ListCampaignQuery query, CancellationToken cancellationToken) =>
         {
-            var responses = await mediator.Send(new ListCampaignQuery());
+            var responses = await query.Handle(cancellationToken);
 
             return responses.Select(Response.FromQuery);
         });

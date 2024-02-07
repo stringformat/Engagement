@@ -9,24 +9,24 @@ namespace Engagement.Api.Questions.Reply;
 [JsonDerivedType(typeof(MultipleChoiceRequest))]
 public abstract record Request(string? Commentary, Guid UserId)
 {
-    public abstract ReplyQuestionCommand.AnswerCommand ToCommand();
+    public abstract ReplyQuestionRequest ToCommandRequest(Guid questionId);
 }
 
 public record TextRequest(string Value, string? Commentary, Guid UserId) : Request(Commentary, UserId)
 {
-    public override ReplyQuestionCommand.AnswerCommand ToCommand() 
-        => new ReplyQuestionCommand.TextAnswerCommand(Value, Commentary, UserId);
+    public override ReplyQuestionRequest ToCommandRequest(Guid questionId) 
+        => new (questionId, new ReplyQuestionRequest.TextAnswerRequest(Value, Commentary, UserId));
 }
 
 public record RangeRequest(uint Score, string? Commentary, Guid UserId) : Request(Commentary, UserId)
 {
-    public override ReplyQuestionCommand.AnswerCommand ToCommand() 
-        => new ReplyQuestionCommand.RangeAnswerCommand(Score, Commentary, UserId);
+    public override ReplyQuestionRequest ToCommandRequest(Guid questionId) 
+        => new(questionId, new ReplyQuestionRequest.RangeAnswerRequest(Score, Commentary, UserId));
 }
 
 public record MultipleChoiceRequest(Guid SelectedOptionId, string? Commentary, Guid UserId) : Request(Commentary, UserId)
 {
-    public override ReplyQuestionCommand.AnswerCommand ToCommand() 
-        => new ReplyQuestionCommand.MultipleChoiceAnswerCommand(SelectedOptionId, Commentary, UserId);
+    public override ReplyQuestionRequest ToCommandRequest(Guid questionId) 
+        => new (questionId, new ReplyQuestionRequest.MultipleChoiceAnswerRequest(SelectedOptionId, Commentary, UserId));
 }
 

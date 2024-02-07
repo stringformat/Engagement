@@ -6,13 +6,13 @@ public static class Endpoint
 {
     public static WebApplication MapSurveyClose(this WebApplication app)
     {
-        app.MapPost("api/surveys/{id:guid}/close", async (Guid campaignId, Guid id, IMediator mediator) =>
+        app.MapPost("api/surveys/{id:guid}/close", async (Guid id, CloseSurveyCommand closeSurveyCommand, CancellationToken cancellationToken) =>
         {
-            var result = await mediator.Send(new CloseSurveyCommand(id));
+            var result = await closeSurveyCommand.Handle(new CloseSurveyRequest(id), cancellationToken);
             
             return result.IsSuccess 
-                ? Results.Ok(Response.FromCommand(result)) 
-                : Results.BadRequest();
+                ? Results.Ok()
+                : result.Error.ToResponse();
         });
 
         return app;

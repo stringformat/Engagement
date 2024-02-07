@@ -1,4 +1,4 @@
-using Engagement.Application.Features.Campaigns.List;
+using Engagement.Application.Features.Surveys.List;
 
 namespace Engagement.Api.Surveys.List;
 
@@ -6,9 +6,9 @@ public static class Endpoint
 {
     public static WebApplication MapSurveyList(this WebApplication app)
     {
-        app.MapGet("api/campaigns/{id:guid}/surveys", async (Guid id, IMediator mediator) =>
+        app.MapGet("api/surveys", async (ListSurveyQuery listSurveyQuery, CancellationToken cancellationToken) =>
         {
-            var responses = await mediator.Send(new ListCampaignQuery());
+            var responses = await listSurveyQuery.Handle(cancellationToken);
 
             return responses.Select(Response.FromQuery);
         });

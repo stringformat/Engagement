@@ -22,5 +22,4 @@ global using Engagement.Api.Users.Retrieve;
 global using Engagement.Application;
 global using Engagement.Application.Features.Campaigns.Create;
 global using Engagement.Infrastructure;
-global using MediatR;
 global using Microsoft.AspNetCore.HttpLogging;

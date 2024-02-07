@@ -6,13 +6,12 @@ public static class Endpoint
 {
     public static WebApplication MapQuestionReply(this WebApplication app)
     {
-        app.MapPost("api/questions/{id:guid}/reply", async (Guid id, Request request, IMediator mediator) =>
+        app.MapPost("api/questions/{id:guid}/reply", async (Guid id, Request request, ReplyQuestionCommand replyQuestionCommand, CancellationToken cancellationToken) =>
         {
-            var command = new ReplyQuestionCommand(id, request.ToCommand());
-            var response = await mediator.Send(command);
+            var response = await replyQuestionCommand.Handle(request.ToCommandRequest(id), cancellationToken);
             
             return response.IsSuccess 
-                ? Results.Ok(Response.FromCommand(response.Value)) 
+                ? Results.Ok() 
                 : response.Error.ToResponse();
         });
 

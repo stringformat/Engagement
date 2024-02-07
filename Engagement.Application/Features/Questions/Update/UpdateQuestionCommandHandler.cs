@@ -1,19 +1,18 @@
 using Engagement.Domain.Common;
-using MediatR;
 
 namespace Engagement.Application.Features.Questions.Update;
 
-public record UpdateQuestionCommandHandler : IRequestHandler<UpdateQuestionCommand, Result<Guid>>
+public record UpdateQuestionCommand : ICommand<UpdateQuestionRequest>
 {
     private readonly IQuestionRepository _questionRepository;
 
-    public UpdateQuestionCommandHandler(IQuestionRepository questionRepository)
+    public UpdateQuestionCommand(IQuestionRepository questionRepository)
     {
         _questionRepository = questionRepository;
     }
     
-    public async Task<Result<Guid>> Handle(
-        UpdateQuestionCommand request,
+    public async Task<Result> Handle(
+        UpdateQuestionRequest request,
         CancellationToken cancellationToken)
     {
         var (isQuestionRetrieved, question) = await _questionRepository.FindAsync(request.Id, cancellationToken);
@@ -38,6 +37,6 @@ public record UpdateQuestionCommandHandler : IRequestHandler<UpdateQuestionComma
         
         _questionRepository.Update(question);
 
-        return question.Id;
+        return Result.Success();
     }
 }

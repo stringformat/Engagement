@@ -6,13 +6,14 @@ public static class Endpoint
 {
     public static WebApplication MapSurveyReschedule(this WebApplication app)
     {
-        app.MapPost("api/campaigns/{campaignId:guid}/surveys/{id:guid}/reschedule", async (Guid campaignId, Guid id, Request request, IMediator mediator) =>
+        app.MapPost("api/surveys/{id:guid}/reschedule", async (Guid id, Request request, RescheduleSurveyCommand rescheduleSurveyCommand, CancellationToken cancellationToken) =>
         {
-            var result = await mediator.Send(new RescheduleSurveyCommand(campaignId, id, request.SendingDate));
+            var response = await rescheduleSurveyCommand.Handle(new RescheduleSurveyRequest(id, request.SendingDate),
+                cancellationToken);
             
-            return result.IsSuccess 
-                ? Results.Ok(Response.FromCommand(result)) 
-                : Results.BadRequest();
+            return response.IsSuccess 
+                ? Results.Ok() 
+                : response.Error.ToResponse();
         });
 
         return app;

@@ -6,11 +6,11 @@ public static class Endpoint
 {
     public static WebApplication MapUserCreate(this WebApplication app)
     {
-        app.MapPost("api/users", async (Request request, IMediator mediator) =>
+        app.MapPost("api/users", async (Request request, CreateUserCommand createUserCommand, CancellationToken cancellationToken) =>
         {
-            var response = await mediator.Send(new CreateUserCommand(request.FirstName, request.LastName, request.Email));
+            var response = await createUserCommand.Handle(new CreateUserRequest(request.FirstName, request.LastName, request.Email), cancellationToken);
             
-            return response.IsSuccess 
+            return response.IsSuccess
                 ? Results.Ok(Response.FromCommand(response.Value))
                 : response.Error.ToResponse();
         });
