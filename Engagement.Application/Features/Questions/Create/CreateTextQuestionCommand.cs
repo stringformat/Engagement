@@ -1,5 +1,6 @@
 using Engagement.Application.Features.Surveys;
 using Engagement.Domain.Common;
+using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 
@@ -35,7 +36,7 @@ public record CreateTextQuestionCommand : ICommandWithResult<CreateTextQuestionR
 
         var order = new Order(request.Order);
 
-        var question = new TextQuestion(name, description, order);
+        var question = new TextQuestion(name, description, order, Pillar.Aucun);
 
         survey.AddQuestion(question);
         

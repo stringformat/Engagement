@@ -11,7 +11,7 @@ public static class Endpoint
             var responses = await listQuestionQuery.Handle(cancellationToken);
 
             return responses.Select(Response.FromQuery);
-        });
+        }).WithName("ListQuestion").WithOpenApi().Produces<ListQuestionResponse>().WithTags("Questions");
 
         return app;
     }

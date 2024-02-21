@@ -13,7 +13,7 @@ public static class Endpoint
             return response.IsSuccess 
                 ? Results.Ok() 
                 : response.Error.ToResponse();
-        });
+        }).WithName("ReplyQuestion").WithOpenApi().Produces<ReplyQuestionResponse>().WithTags("Questions");
 
         return app;
     }

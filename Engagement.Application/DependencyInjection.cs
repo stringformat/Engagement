@@ -35,44 +35,43 @@ public static class DependencyInjection
 
     private static void AddCampaigns(IServiceCollection services)
     {
-        services.TryAddScoped<ICommandWithResult<CreateCampaignRequest>, CreateCampaignCommand>();
-        services.TryAddScoped<ICommand<UpdateCampaignRequest>, UpdateCampaignCommand>();
+        services.TryAddScoped<CreateCampaignCommand>();
+        services.TryAddScoped<UpdateCampaignCommand>();
         
-        services.TryAddScoped<IQuery<List<ListCampaignResponse>>, ListCampaignQuery>();
-        services.TryAddScoped<IQuery<RetrieveCampaignRequest, Result<RetrieveCampaignResponse>>, RetrieveCampaignQuery>();
+        services.TryAddScoped<ListCampaignQuery>();
+        services.TryAddScoped<RetrieveCampaignQuery>();
     }
     
     private static void AddQuestions(IServiceCollection services)
     {
-        services.TryAddScoped<ICommandWithResult<CreateTextQuestionRequest>, CreateTextQuestionCommand>();
-        services.TryAddScoped<ICommandWithResult<CreateRangeQuestionRequest>, CreateRangeQuestionCommand>();
-        services.TryAddScoped<ICommandWithResult<CreateMultipleChoiceQuestionRequest>, CreateMultipleChoiceQuestionCommand>();
-        services.TryAddScoped<ICommand<SkipQuestionRequest>, SkipQuestionCommand>();
-        services.TryAddScoped<ICommand<ReorderQuestionRequest>, ReorderQuestionCommand>();
-        services.TryAddScoped<ICommand<ReplyQuestionRequest>, ReplyQuestionCommand>();
-        services.TryAddScoped<ICommand<UpdateQuestionRequest>, UpdateQuestionCommand>();
+        services.TryAddScoped<CreateTextQuestionCommand>();
+        services.TryAddScoped<CreateRangeQuestionCommand>();
+        services.TryAddScoped<CreateMultipleChoiceQuestionCommand>();
+        services.TryAddScoped<SkipQuestionCommand>();
+        services.TryAddScoped<ReorderQuestionCommand>();
+        services.TryAddScoped<ReplyQuestionCommand>();
+        services.TryAddScoped<UpdateQuestionCommand>();
         
-        services.TryAddScoped<IQuery<List<ListQuestionResponse>>, ListQuestionQuery>();
-        services.TryAddScoped<IQuery<RetrieveQuestionRequest, Result<RetrieveQuestionResponse>>, RetrieveQuestionQuery>();
+        services.TryAddScoped<ListQuestionQuery>();
+        services.TryAddScoped<RetrieveQuestionQuery>();
     }
     
     private static void AddSurveys(IServiceCollection services)
     {
-        services.TryAddScoped<ICommandWithResult<CreateSurveyRequest>, CreateSurveyCommand>();
-        services.TryAddScoped<ICommand<CloseSurveyRequest>, CloseSurveyCommand>();
-        services.TryAddScoped<ICommand<OpenSurveyRequest>, OpenSurveyCommand>();
-        services.TryAddScoped<ICommand<RescheduleSurveyRequest>, RescheduleSurveyCommand>();
-        services.TryAddScoped<ICommand<UpdateSurveyRequest>, UpdateSurveyCommand>();
+        services.TryAddScoped<CreateSurveyCommand>();
+        services.TryAddScoped<CloseSurveyCommand>();
+        services.TryAddScoped<OpenSurveyCommand>();
+        services.TryAddScoped<RescheduleSurveyCommand>();
+        services.TryAddScoped<UpdateSurveyCommand>();
         
-        services.TryAddScoped<IQuery<List<ListSurveyResponse>>, ListSurveyQuery>();
-        services.TryAddScoped<IQuery<RetrieveSurveyRequest, Result<RetrieveSurveyResponse>>, RetrieveSurveyQuery>();
+        services.TryAddScoped<ListSurveyQuery>();
+        services.TryAddScoped<RetrieveSurveyQuery>();
     }
     
     private static void AddUsers(IServiceCollection services)
     {
-        services.TryAddScoped<ICommandWithResult<CreateUserRequest>, CreateUserCommand>();
-        
-        services.TryAddScoped<IQuery<List<ListUserResponse>>, ListUserQuery>();
-        services.TryAddScoped<IQuery<RetrieveUserRequest, Result<RetrieveUserResponse>>, RetrieveUserQuery>();
+        services.TryAddScoped<CreateUserCommand>();
+        services.TryAddScoped<ListUserQuery>();
+        services.TryAddScoped<RetrieveUserQuery>();
     }
 }

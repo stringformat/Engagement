@@ -10,8 +10,4 @@
       <ProjectReference Include="..\Engagement.Common\Engagement.Common.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="CampaignAggregate\Specifications\" />
-    </ItemGroup>
-
 </Project>

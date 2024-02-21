@@ -1,6 +1,7 @@
 using System.Collections.ObjectModel;
 using Engagement.Application.Features.Surveys;
 using Engagement.Domain.Common;
+using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 
@@ -49,7 +50,7 @@ public record CreateMultipleChoiceQuestionCommand : ICommandWithResult<CreateMul
             options.Add(new Option(optionOrder, optionDescription));
         }
 
-        var questionResult = MultipleChoiceQuestion.Create(name, description, order, options);
+        var questionResult = MultipleChoiceQuestion.Create(name, description, order, Pillar.Aucun, options);
 
         if (!questionResult.TryGet(out var question))
             return questionResult.Error;

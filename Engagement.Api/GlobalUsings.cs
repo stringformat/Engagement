@@ -4,6 +4,7 @@ global using Engagement.Api.Campaigns.Create;
 global using Engagement.Api.Campaigns.List;
 global using Engagement.Api.Campaigns.Retrieve;
 global using Engagement.Api.Campaigns.Update;
+global using Engagement.Api.Extensions;
 global using Engagement.Api.Questions.Create;
 global using Engagement.Api.Questions.List;
 global using Engagement.Api.Questions.Reply;

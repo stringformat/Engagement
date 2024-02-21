@@ -6,7 +6,7 @@ public record ListQuestionQuery : IQuery<List<ListQuestionResponse>>
 {
     private readonly IQuestionReadRepository _questionRepository;
 
-    public ListQuestionQuery(ISurveyRepository surveyRepository, IQuestionReadRepository questionRepository)
+    public ListQuestionQuery(IQuestionReadRepository questionRepository)
     {
         _questionRepository = questionRepository;
     }

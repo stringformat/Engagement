@@ -37,7 +37,7 @@ public record CreateSurveyCommand : ICommandWithResult<CreateSurveyRequest>
         if (!isCreatedSendingDate)
             return sendingDateError;
 
-        var survey = new Survey(name, description, sendingDate);
+        var survey = new Survey(name, description, sendingDate, null);
         
         campaign.AddSurvey(survey);
 

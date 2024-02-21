@@ -28,7 +28,7 @@ public record CreateUserCommand : ICommandWithResult<CreateUserRequest>
         if (!isCreatedEmail)
             return errorEmail;
 
-        var user = new User(firstName, lastName, email);
+        var user = new User(firstName, lastName, Gender.Man, null, email);
 
         await _userRepository.AddAsync(user, cancellationToken);
 

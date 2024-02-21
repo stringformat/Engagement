@@ -24,10 +24,12 @@ public class SurveyReadRepository(EngagementContext context) : ReadRepositoryBas
 
     public async Task<Result<AnalyzeSurveyResponse>> Analyze(Specification<Survey> specification, CancellationToken cancellationToken)
     {
-        return await SpecificationQueryBuilder
-            .GetQuery(Set, specification)
-            .Select(x => new AnalyzeSurveyResponse(x.ParticipationRate))
-            .FirstOrDefaultAsync(cancellationToken) ?? Result<AnalyzeSurveyResponse>.Failure();
+        return null;
+        //
+        // return await SpecificationQueryBuilder
+        //     .GetQuery(Set, specification)
+        //     .Select(x => new AnalyzeSurveyResponse(x.ParticipationRate))
+        //     .FirstOrDefaultAsync(cancellationToken) ?? Result<AnalyzeSurveyResponse>.Failure();
             
     }
 }

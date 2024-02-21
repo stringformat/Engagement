@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using Engagement.Application.Features.Questions.Create;
 
 namespace Engagement.Api.Questions.Create;
@@ -25,7 +26,13 @@ public static class Endpoint
             return response.IsSuccess
                 ? Results.Ok(Response.FromCommand(response.Value)) 
                 : response.Error.ToResponse();
-        });
+        })
+            .WithName("CreateQuestion")
+            .WithTags("Questions")
+            .WithSummary("Création d'une question")
+            .Accepts<Request>(MediaTypeNames.Application.Json)
+            .Produces<Response>()
+            .WithOpenApi();
 
         return app;
     }

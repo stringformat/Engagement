@@ -5,10 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddHttpLogging(options => options.LoggingFields = HttpLoggingFields.RequestBody | HttpLoggingFields.ResponseBody);
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options => options.CustomSchemaIds(x => x.FullName));
 
 var app = builder.Build();
 
 app.UseHttpLogging();
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapCampaignCreate();
 app.MapCampaignList();

@@ -16,8 +16,6 @@ public class Survey : Entity, IAggregateRoot
     private readonly ICollection<User> _users = [];
     public virtual ImmutableList<User> Users => _users.ToImmutableList();
     
-    public int ParticipationRate => (int)_questions.Average(x => x.NumberOfAnswer / _users.Count * 100);
-    
     public Survey(Name name, Description description, SendingDate sendingDate, IEnumerable<User> users)
     {
         Name = name;

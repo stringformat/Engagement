@@ -1,5 +1,6 @@
 using Engagement.Application.Features.Surveys;
 using Engagement.Domain.Common;
+using Engagement.Domain.QuestionAggregate;
 using Engagement.Domain.QuestionAggregate.Questions;
 using Engagement.Domain.QuestionAggregate.ValueObjects;
 
@@ -35,7 +36,7 @@ public record CreateRangeQuestionCommand : ICommandWithResult<CreateRangeQuestio
 
         var order = new Order(request.Order);
 
-        var question = new RangeQuestion(name, description, order);
+        var question = new RangeQuestion(name, description, order, Pillar.Aucun);
 
         survey.AddQuestion(question);
         
